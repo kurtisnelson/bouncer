@@ -17,6 +17,4 @@ test:
   w: 0
 
 production:
-  <<: *defaults
-  database: bouncer
-  uri: <%= ENV['MONGODB_URI'] %>
+  uri: <%= ENV['MONGOLAB_URI'] %>
