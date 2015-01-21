@@ -15,4 +15,6 @@ class User
   key :confirmation_sent_at, Time
   key :confirmation_token, String
   key :unconfirmed_email, String
+  key :reset_password_token, String
+  key :reset_password_sent_at, Time
 end

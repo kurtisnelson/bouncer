@@ -1,9 +1,7 @@
 Devise.setup do |config|
   config.secret_key = '8888ef449d4bd6802caf0b781cb37837b805adf194abfd84037a0e865ecda46611b473c5758f0a0e7ba7ac8762e53bc99df19e4cfc725ef095cad88066b1f22f'
 
-  config.mailer_sender = 'no-reply@'
-
-  # config.mailer = 'Devise::Mailer'
+  config.mailer = 'DeviseMailer'
 
   require 'devise/orm/mongo_mapper'
 
