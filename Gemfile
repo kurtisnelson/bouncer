@@ -34,6 +34,7 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails'
+  gem 'faker'
   gem 'rspec-rails', '~> 3.0.0'
   gem 'vcr'
   gem 'web-console', '~> 2.0'
