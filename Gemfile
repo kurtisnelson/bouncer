@@ -12,6 +12,7 @@ gem 'mandrill-api'
 gem 'mongo_mapper'
 gem 'mm-devise'
 gem 'omniauth'
+gem 'omniauth-facebook'
 gem 'parse-ruby-client'
 gem 'rails_12factor', group: :production
 gem 'raygun4ruby'
