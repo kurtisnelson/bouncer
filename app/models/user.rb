@@ -30,6 +30,7 @@ class User
     end
     user.email = auth.info.email
     user.password = Devise.friendly_token[0,20] if user.password.blank?
+    user.facebook_uid = auth.uid
     user.name = auth.info.name
     user.image = auth.info.image
     user.confirm!
