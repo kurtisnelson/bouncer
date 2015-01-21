@@ -3,7 +3,7 @@ class TokensController < ApplicationController
 
   def me
     if doorkeeper_token && doorkeeper_token.accessible?
-      render json: doorkeeper_token, status: :ok
+      render json: User.find(doorkeeper_token.resource_owner_id), status: :ok
     else
       error = Doorkeeper::OAuth::ErrorResponse.new(name: :invalid_request)
       response.headers.merge!(error.headers)
