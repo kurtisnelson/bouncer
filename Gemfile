@@ -5,6 +5,7 @@ gem 'rails', '4.2.0'
 
 gem 'bson_ext'
 gem 'devise', '~> 3.4.1'
+gem 'doorkeeper'
 gem 'jbuilder'
 gem 'jquery-rails'
 gem 'rack-cors'
@@ -26,7 +27,6 @@ group :development, :test do
   gem 'pry'
   gem 'dotenv-rails'
   gem 'foreman'
-  gem 'spring'
   gem 'yard', '~>0.8.1'
   gem 'yard-rest'
 end
