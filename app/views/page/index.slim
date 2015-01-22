@@ -1,5 +1,8 @@
 p
   ' Welcome
-  = current_user.name
-
-= link_to "Change/Add Password", edit_user_registration_path
+= image_tag current_user.image
+= current_user.name
+- if current_user.super_admin
+  p Superadmin
+ul
+  li = link_to "Change/Add Password", edit_user_registration_path

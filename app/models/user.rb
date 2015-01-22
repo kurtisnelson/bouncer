@@ -22,6 +22,7 @@ class User
 
   key :name, String
   key :image, String
+  key :super_admin, Boolean
 
   def self.from_omniauth(auth)
     user = where(email: auth.info.email).first

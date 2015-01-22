@@ -2,7 +2,9 @@ class TokensController < ApplicationController
   include Doorkeeper::Helpers::Controller
 
   def me
-    if doorkeeper_token && doorkeeper_token.accessible?
+    if current_user
+      render json: current_user, status: :ok
+    elsif doorkeeper_token && doorkeeper_token.accessible?
       render json: User.find(doorkeeper_token.resource_owner_id), status: :ok
     else
       error = Doorkeeper::OAuth::ErrorResponse.new(name: :invalid_request)
