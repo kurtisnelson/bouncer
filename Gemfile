@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 ruby '2.2.0'
 gem 'rails', '4.2.0'
 
+gem 'bootstrap-sass', '~> 3.3.3'
 gem 'bson_ext'
 gem 'devise', '~> 3.4.1'
 gem 'doorkeeper'
@@ -17,6 +18,7 @@ gem 'omniauth-facebook'
 gem 'parse-ruby-client'
 gem 'rails_12factor', group: :production
 gem 'raygun4ruby'
+gem 'sass-rails', '>= 3.2'
 gem 'slim-rails'
 gem 'turbolinks'
 
