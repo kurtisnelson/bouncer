@@ -7,6 +7,7 @@ gem 'bootstrap-sass', '~> 3.3.3'
 gem 'bson_ext'
 gem 'devise', '~> 3.4.1'
 gem 'doorkeeper'
+gem 'doorkeeper-grants_assertion', github: "uniiverse/doorkeeper-grants_assertion"
 gem 'jbuilder'
 gem 'jquery-rails'
 gem 'rack-cors'

@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/uniiverse/doorkeeper-grants_assertion.git
+  revision: e49dbbaeb88c838d95002ee15beb900e6641d852
+  specs:
+    doorkeeper-grants_assertion (0.0.1)
+      doorkeeper (>= 1.3)
+      railties (>= 3.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -286,6 +294,7 @@ DEPENDENCIES
   database_cleaner
   devise (~> 3.4.1)
   doorkeeper
+  doorkeeper-grants_assertion!
   dotenv-rails
   factory_girl_rails
   faker

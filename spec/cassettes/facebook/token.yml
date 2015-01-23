@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://graph.facebook.com/me?access_token=valid
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Last-Modified:
+      - '2015-01-16T02:31:24+0000'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fb-Rev:
+      - '1572617'
+      Etag:
+      - '"e8a80c621e1659f642f0dd77255e5d73c5a9916d"'
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Facebook-Api-Version:
+      - v2.2
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      X-Fb-Debug:
+      - PWn3G+cLE0m27DbbdMbiKDwrS+OD2Ye3QR42kuHxo6YGeW3vaW99FX0OoDyAnRK7q6kFzbPk/MGSy3/GhUVJzw==
+      Date:
+      - Fri, 23 Jan 2015 20:47:18 GMT
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '308'
+    body:
+      encoding: UTF-8
+      string: '{"id":"123","email":"test@example.com","first_name":"Kurt","gender":"male","last_name":"Nelson","link":"https:\/\/www.facebook.com\/app_scoped_user_id\/123\/","locale":"en_US","name":"Kurt
+        Nelson","timezone":-5,"updated_time":"2015-01-16T02:31:24+0000","verified":true}'
+    http_version: 
+  recorded_at: Fri, 23 Jan 2015 20:47:19 GMT
+recorded_with: VCR 2.9.3

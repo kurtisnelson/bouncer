@@ -18,12 +18,26 @@ class User
   key :unconfirmed_email, String
   key :reset_password_token, String
   key :reset_password_sent_at, Time
-  key :facebook_uid, String
 
   key :name, String
   key :phone, String
   key :image, String
   key :super_admin, Boolean
+  key :facebook_uid, String
+
+  def self.from_facebook(data)
+    user = where(facebook_uid: data['id']).first
+    if user == nil
+      user = User.new
+    end
+    user.password = Devise.friendly_token[0,20] if user.password.blank?
+    user.facebook_uid = data['id']
+    user.email = data['email']
+    user.name = data['name']
+    user.confirm!
+    user.save
+    user
+  end
 
   def self.from_omniauth(auth)
     user = where(email: auth.info.email).first

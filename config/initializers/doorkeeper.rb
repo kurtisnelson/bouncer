@@ -13,7 +13,16 @@ Doorkeeper.configure do
     u if u && u.valid_password?(params[:password])
   end
 
-  grant_flows %w(authorization_code client_credentials password)
+  resource_owner_from_assertion do
+    facebook = URI.parse('https://graph.facebook.com/me?access_token=' + params[:assertion])
+    response = Net::HTTP.get_response(facebook)
+    if response.code == "200"
+      user_data = JSON.parse(response.body)
+      User.from_facebook(user_data)
+    end
+  end
+
+  grant_flows %w(assertion authorization_code client_credentials password)
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
   # admin_authenticator do
   #   # Put your admin authentication logic here.
