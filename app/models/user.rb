@@ -21,6 +21,7 @@ class User
   key :facebook_uid, String
 
   key :name, String
+  key :phone, String
   key :image, String
   key :super_admin, Boolean
 
