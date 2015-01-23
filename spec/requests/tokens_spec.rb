@@ -14,6 +14,7 @@ describe TokensController do
       it "succeeeds with a valid token" do
         get me_path, access_token: access_token.token
         expect(response).to be_success
+        expect(json["user"]).to_not be nil
       end
     end
   end
