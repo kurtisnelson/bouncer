@@ -1,5 +1,7 @@
 class User
   include MongoMapper::Document
+  after_create :get_avatar
+
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable, :confirmable,
     :omniauthable, omniauth_providers: [:facebook]
@@ -24,14 +26,16 @@ class User
   key :image, String
   key :super_admin, Boolean
   key :facebook_uid, String
+  key :facebook_token, String
 
-  def self.from_facebook(data)
+  def self.from_facebook(data, token)
     user = where(facebook_uid: data['id']).first
     if user == nil
       user = User.new
     end
     user.password = Devise.friendly_token[0,20] if user.password.blank?
     user.facebook_uid = data['id']
+    user.facebook_token = token
     user.email = data['email']
     user.name = data['name']
     user.confirm!
@@ -59,6 +63,17 @@ class User
       if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
         user.email = data["email"] if user.email.blank?
       end
+    end
+  end
+
+  def get_avatar
+    return unless facebook_token
+    facebook = URI.parse('https://graph.facebook.com/me/picture?redirect=false&type=square&access_token=' + self.facebook_token)
+    response = Net::HTTP.get_response(facebook)
+    if response.code == "200"
+      user_data = JSON.parse(response.body)
+      self.image = user_data['data']['url']
+      self.save
     end
   end
 end

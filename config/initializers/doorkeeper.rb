@@ -14,11 +14,12 @@ Doorkeeper.configure do
   end
 
   resource_owner_from_assertion do
-    facebook = URI.parse('https://graph.facebook.com/me?access_token=' + params[:assertion])
+    token = params[:assertion]
+    facebook = URI.parse('https://graph.facebook.com/me?access_token=' + token)
     response = Net::HTTP.get_response(facebook)
     if response.code == "200"
       user_data = JSON.parse(response.body)
-      User.from_facebook(user_data)
+      User.from_facebook(user_data, token)
     end
   end
 

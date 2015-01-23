@@ -1,0 +1,50 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://graph.facebook.com/me/picture?access_token=CAAIPAZAqJPP8BAOaH8ryZAkYKZAAp2YSogbjxiYr9tpmo5EerZC7yBmexZAnoRaadakbHszxaZAvbE4jABWnZAZCscVZCJEFtirbkjSRv3Vi1Ozn7WsEUCZB7d9Qar7lMuZBJrZBXGw3nhfxuRlVL4lAH77n7GKCOV9pfoxkkp4vL7jkZCwLfFQzezhUAZCxM5VUMGMCKMT88t33f96GVHSj3CHm6WoimuXCdIEwRUJrBNiYzWAgZDZD&redirect=false&type=square
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fb-Rev:
+      - '1572617'
+      Etag:
+      - '"c3e72a21a5c0e4698ce446954ac066be227abf92"'
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Facebook-Api-Version:
+      - v2.2
+      Expires:
+      - Sat, 01 Jan 2000 00:00:00 GMT
+      X-Fb-Debug:
+      - Uqwlvcu9Ojj8EtgYm9Mo/x/dNDbRh4ExCbTtCa2LiQI2Mwe6BHgF4JRC6aX9HEyeq3EhvHlFBjdsnw0t1GdNWw==
+      Date:
+      - Fri, 23 Jan 2015 22:10:55 GMT
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '259'
+    body:
+      encoding: UTF-8
+      string: '{"data":{"is_silhouette":false,"url":"https:\/\/fbcdn-profile-a.akamaihd.net\/hprofile-ak-xpf1\/v\/t1.0-1\/p50x50\/1422503_10201617485134756_581959844_n.jpg?oh=3c43c2d34d7d47e80db7fa70bb785d25&oe=5520E205&__gda__=1428924611_85419e61233019fb72739415cada4ba6"}}'
+    http_version: 
+  recorded_at: Fri, 23 Jan 2015 22:10:56 GMT
+recorded_with: VCR 2.9.3

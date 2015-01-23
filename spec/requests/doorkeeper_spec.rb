@@ -3,6 +3,7 @@ require 'request_helper'
 describe Doorkeeper::TokensController do
   describe 'POST /oauth/token' do
     it 'accepts an assertion grant' do
+      allow_any_instance_of(User).to receive(:get_avatar)
       VCR.use_cassette 'facebook/token' do
         post oauth_token_path, {"grant_type"=>"assertion", "assertion"=>"valid"}
       end
