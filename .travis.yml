@@ -1,0 +1,11 @@
+language: ruby
+rvm:
+  - 2.2.0
+cache: bundler
+bundler_args: --without production
+services:
+  - mongodb
+notifications:
+  email: false
+script:
+  - bundle exec rspec --format progress
