@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :devices do
     collection do
       get :claim
-      put :claim
+      post :claim
       post :register
     end
     put :remove
