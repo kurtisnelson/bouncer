@@ -42,7 +42,7 @@ class DevicesController < ApplicationController
     @device = Device.new
     @device.serial = params[:serial]
     @device.code = SecureRandom.hex(6)
-    
+
     if @device.save
       render json: {token: @device.code}
     else
@@ -56,6 +56,16 @@ class DevicesController < ApplicationController
     @device.user_id = nil
     if @device.save
       head :ok
+    else
+      render action: "show"
+    end
+  end
+
+  def destroy
+    @device = Device.find(params["id"])
+    return head :forbidden unless current_user.super_admin? || @device.user_id == current_user.id
+    if @device.destroy
+      redirect_to devices_path
     else
       render action: "show"
     end

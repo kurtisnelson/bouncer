@@ -5,4 +5,6 @@ h2 = @device.serial
     ' Managed by
     = @device.user.email
 = link_to "Edit", edit_device_path(@device)
-= link_to "Remove", device_remove_path(@device), method: :delete
+= link_to "Remove", device_remove_path(@device), method: :put
+- if current_user.super_admin?
+  = link_to "Delete", device_path(@device), method: :delete
