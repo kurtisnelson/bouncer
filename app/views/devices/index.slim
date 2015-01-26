@@ -1,0 +1,18 @@
+h1 Devices
+- if @devices.empty?
+  p no devices
+- else
+  table.table
+    thead
+      tr
+        th Name
+        th Serial
+    tbody
+      - @devices.each do |device|
+        tr
+          td = link_to device.name, device_path(device)
+          td = device.serial
+          - if current_user.super_admin? && device.user?
+            td = device.user.email
+
+p = link_to "Add Device", new_device_path

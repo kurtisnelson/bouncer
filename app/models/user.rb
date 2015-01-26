@@ -1,7 +1,7 @@
 class User
   include MongoMapper::Document
   after_create :get_avatar
-
+  many :devices
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable, :confirmable,
     :omniauthable, omniauth_providers: [:facebook]

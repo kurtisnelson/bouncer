@@ -1,0 +1,6 @@
+= simple_form_for @device do |f|
+  = f.input :name
+  = f.input :serial
+  - if current_user.super_admin?
+    = f.input :user, collection: User.all
+  = f.button :submit

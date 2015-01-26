@@ -20,6 +20,7 @@ gem 'parse-ruby-client'
 gem 'rails_12factor', group: :production
 gem 'raygun4ruby'
 gem 'sass-rails', '>= 3.2'
+gem 'simple_form'
 gem 'slim-rails'
 gem 'turbolinks'
 

@@ -1,0 +1,8 @@
+h1 = @device.name
+h2 = @device.serial
+- if @device.user
+  p
+    ' Managed by
+    = @device.user.email
+= link_to "Edit", edit_device_path(@device)
+= link_to "Remove", device_remove_path(@device), method: :put
