@@ -37,10 +37,9 @@ class DevicesController < ApplicationController
   end
 
   def register
-    device = Device.where(serial: params[:serial])
-    return head :forbidden if device && device.user != nil
+    @device = Device.first_or_create(serial: params[:serial])
+    return head :forbidden if @device && (@device.user_id != nil || @device.code != nil)
 
-    @device = Device.new
     @device.serial = params[:serial]
     @device.code = SecureRandom.hex(2)
 
