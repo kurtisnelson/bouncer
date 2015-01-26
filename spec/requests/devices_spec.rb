@@ -7,7 +7,7 @@ describe DevicesController do
         post register_devices_path(format: :json), {serial: "1234567890"}
       end.to change{Device.count}.by 1
       expect(response).to be_success
-      expect(json['code']).to_not be nil
+      expect(json['token']).to_not be nil
     end
 
     it "will not re-register existing device" do

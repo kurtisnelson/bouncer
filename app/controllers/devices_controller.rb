@@ -44,7 +44,7 @@ class DevicesController < ApplicationController
     @device.code = SecureRandom.hex(6)
     
     if @device.save
-      render json: {code: @device.code}
+      render json: {token: @device.code}
     else
       head :bad_request
     end
