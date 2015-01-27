@@ -28,6 +28,10 @@ class User
   key :facebook_uid, String
   key :facebook_token, String
 
+  def to_s
+    self.email
+  end
+
   def self.from_facebook(data, token)
     user = where(facebook_uid: data['id']).first
     if user == nil
