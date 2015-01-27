@@ -1,16 +1,21 @@
 class Device
   include MongoMapper::Document
-  before_create :generate_token
+  after_create :issue_token
 
   belongs_to :user
+  many :device_tokens, foreign_key: :resource_owner_id, class: Doorkeeper::DeviceToken
   key :name, String
   key :serial, String, unique: true, required: true
-  key :token, String
+
   timestamps!
+
+  def device_token
+    self.device_tokens.first
+  end
 
   private
 
-  def generate_token
-    self.token = SecureRandom.hex 128
+  def issue_token
+    Doorkeeper::DeviceToken.find_or_create_for(nil, self.id, "machine", 1.day, true)
   end
 end
