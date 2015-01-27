@@ -16,6 +16,7 @@ Doorkeeper.configure do
 
   resource_owner_from_assertion do
     token = params[:assertion]
+    return if token.blank?
     facebook = URI.parse('https://graph.facebook.com/me?access_token=' + token)
     response = Net::HTTP.get_response(facebook)
     if response.code == "200"
