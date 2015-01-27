@@ -15,5 +15,4 @@ h1 Devices
           - if current_user.super_admin? && device.user?
             td = device.user.email
 
-p = link_to "Claim Device", claim_devices_path
 p = link_to "Add Device", new_device_path
