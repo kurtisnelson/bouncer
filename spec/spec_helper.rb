@@ -1,5 +1,7 @@
 require 'vcr'
 require 'webmock/rspec'
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
 
 RSpec.configure do |config|
   config.before(:suite) do

@@ -9,3 +9,7 @@ notifications:
   email: false
 script:
   - bundle exec rspec --format progress
+
+addons:
+  code_climate:
+    repo_token: 8e11dafcec01e538842def0f42a67be2958e530ff38b5ca943833494a6186def

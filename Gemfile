@@ -44,5 +44,6 @@ group :test do
   gem 'vcr'
   gem 'web-console', '~> 2.0'
   gem 'webmock'
+  gem "codeclimate-test-reporter", require: nil
 end
 
