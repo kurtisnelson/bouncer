@@ -8,6 +8,12 @@ describe DevicesController do
       post devices_path(format: :json), access_token: access_token.token, device: {serial: '1234567890'}
       expect(response).to be_success
     end
+
+    it 'does not allow a duplicate device to be created' do
+      post devices_path(format: :json), access_token: access_token.token, device: {serial: '1234567890'}
+      post devices_path(format: :json), access_token: access_token.token, device: {serial: '1234567890'}
+      expect(response.status).to eq 400
+    end
   end
   context 'no auth' do
     it 'is unauthorized' do

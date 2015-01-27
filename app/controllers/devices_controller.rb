@@ -59,16 +59,23 @@ class DevicesController < ApplicationController
   end
 
   def create
+    serial = params['device']['serial'].tr('^A-Za-z0-9', '').downcase
+    @device = Device.where(serial: serial).first
+    return head :forbidden if Device.where(serial: serial, :user_id.ne => current_user.id).first
+
     @device = Device.new
     @device.user = current_user
-    @device.serial = params['device']['serial'].tr('^A-Za-z0-9', '').downcase
+    @device.serial = serial
     if @device.save
       respond_to do |format|
         format.html { redirect_to @device, notice: "Device was added" }
-        format.json { render json: @device }
+        format.json { render action: "show" }
       end
     else
-      render action: "new"
+      respond_to do |format|
+        format.html { render action: "new" }
+        format.json { head :bad_request }
+      end
     end
   end
 
