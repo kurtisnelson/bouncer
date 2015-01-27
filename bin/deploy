@@ -1,0 +1,32 @@
+#!/bin/sh
+
+if [[ -n $(git status --porcelain) ]]; then
+  read -p "Working directory is dirty; are you sure you want to continue? (y/N) " yn
+  case $yn in
+    [Yy]* ) :;;
+    *     ) exit;;
+  esac
+fi
+
+if [[ -n $(ack "binding.pry" --ignore-dir=bin) ]]; then
+  read -p "You have a \`binding.pry\` still in your code - make baby pandas cry? (y/N) " yn
+  case $yn in
+    [Yy]* ) :;;
+    *     ) exit;;
+  esac
+fi
+
+if [[ -n $(ack '( |\t)$' --ignore-dir={spec/cassettes,public,db,log}) ]]; then
+  read -p "You have trailing whitespace; check yo'self before you wreck yo'self. Continue? (y/N) " yn
+  case $yn in
+    [Yy]* ) :;;
+    *     ) exit;;
+  esac
+fi
+
+git pull --rebase &&
+bundle exec rspec &&
+git push &&
+git push heroku master &&
+heroku restart --app mbouncer
+curl http://mbouncer.herokuapp.com/ &> /dev/null
