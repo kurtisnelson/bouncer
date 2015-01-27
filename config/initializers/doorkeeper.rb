@@ -6,7 +6,7 @@ Doorkeeper.configure do
   orm :mongo_mapper
 
   resource_owner_authenticator do
-    User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)
+    current_user || redirect_to(new_user_session_url)
   end
 
   resource_owner_from_credentials do |routes|

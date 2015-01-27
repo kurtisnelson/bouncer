@@ -36,33 +36,6 @@ class DevicesController < ApplicationController
     end
   end
 
-  def register
-    @device = Device.first_or_create(serial: params[:serial])
-    return head :forbidden if @device && (@device.user_id != nil || @device.code != nil)
-
-    @device.serial = params[:serial]
-    @device.code = SecureRandom.hex(2)
-
-    if @device.save
-      render json: {token: @device.code}
-    else
-      head :bad_request
-    end
-  end
-
-  def claim
-    return unless params['code']
-    @device = Device.where(code: params['code'], user_id: nil).first
-    return redirect_to claim_devices_path, notice: "Already claimed" unless @device
-    @device.user = current_user
-
-    if @device.save
-      redirect_to @device, notice: "Device claimed"
-    else
-      render action: "claim", notice: "Could not claim"
-    end
-  end
-
   def remove
     @device = Device.find(params["device_id"])
     return head :forbidden unless current_user.super_admin? || @device.user_id == current_user.id
@@ -98,11 +71,5 @@ class DevicesController < ApplicationController
   def show
     @device = Device.find(params[:id])
     return head :forbidden unless current_user.super_admin? || @device.user_id == current_user.id
-  end
-
-  def token
-    @device = Device.find(params[:id])
-    return head :forbidden unless @device.user_id == current_user.id
-    render format: :json
   end
 end

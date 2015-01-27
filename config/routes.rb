@@ -8,11 +8,6 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
   resources :devices do
-    collection do
-      get :claim
-      post :claim
-      post :register
-    end
     put :remove
   end
 end
