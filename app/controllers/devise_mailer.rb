@@ -5,60 +5,38 @@ class DeviseMailer < Devise::Mailer
   def confirmation_instructions(record, token, opts={})
     m = Mandrill::API.new ENV['MANDRILL_KEY']
     template_content = [{"name"=>"example name", "content"=>"example content"}]
-    message = {
-      to:
-        [{email: record.email,
-          type: "to"}],
-      merge: true,
-      merge_vars: [
-        {
-          rcpt: record.email,
-          vars: [
-            {name: "CONFIRM_LINK", content: confirmation_url(record, confirmation_token: token)}
-          ]
-        }
-      ]
-    }
+    message = build_message(record.email, "CONFIRM_LINK", confirmation_url(record, confirmation_token: token))
     m.messages.send_template "confirmation", template_content, message
   end
 
   def reset_password_instructions(record, token, opts={})
     m = Mandrill::API.new ENV['MANDRILL_KEY']
     template_content = [{"name"=>"example name", "content"=>"example content"}]
-    message = {
-      to:
-        [{email: record.email,
-          type: "to"}],
-      merge: true,
-      merge_vars: [
-        {
-          rcpt: record.email,
-          vars: [
-            {name: "PASSWORD_RESET_LINK", content: edit_password_url(record, reset_password_token: token)}
-          ]
-        }
-      ]
-    }
+    message = build_message(record.email, "PASSWORD_RESET_LINK", edit_password_url(record, reset_password_token: token))
     m.messages.send_template "reset-password", template_content, message
   end
 
   def unlock_instructions(record, token, opts={})
     m = Mandrill::API.new ENV['MANDRILL_KEY']
     template_content = [{"name"=>"example name", "content"=>"example content"}]
-    message = {
+    message = build_message(record.email, "UNLOCK_LINK", unlock_url(record, unlock_token: token))
+    m.messages.send_template "unlock", template_content, message
+  end
+
+  def build_message recipient, name, url
+    {
       to:
-        [{email: record.email,
+        [{email: recipient,
           type: "to"}],
       merge: true,
       merge_vars: [
         {
-          rcpt: record.email,
+          rcpt: recipient,
           vars: [
-            {name: "UNLOCK_LINK", content: unlock_url(record, unlock_token: token)}
+            {name: name, content: url}
           ]
         }
       ]
     }
-    m.messages.send_template "unlock", template_content, message
   end
 end
