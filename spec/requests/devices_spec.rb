@@ -16,6 +16,7 @@ describe DevicesController do
       post devices_path(format: :json), access_token: access_token.token, device: {serial: serial}
       expect(json['token']).to_not be_empty
       expect(json['token']['refresh_token']).to_not be_blank
+      expect(json['token']['access_token']).to_not be_blank
     end
 
     it 'does not allow a duplicate device to be created' do
