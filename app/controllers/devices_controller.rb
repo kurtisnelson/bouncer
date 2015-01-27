@@ -1,5 +1,6 @@
 class DevicesController < ApplicationController
-  before_filter :authenticate_user!, except: [:register]
+  before_action :authenticate_user!
+  before_action -> { doorkeeper_authorize! :machine }, only: :create
 
   def index
     if params[:serial]
@@ -62,7 +63,10 @@ class DevicesController < ApplicationController
     @device.user = current_user
     @device.serial = params['device']['serial'].tr('^A-Za-z0-9', '').downcase
     if @device.save
-      redirect_to @device, notice: "Device was added"
+      respond_to do |format|
+        format.html { redirect_to @device, notice: "Device was added" }
+        format.json { render json: @device }
+      end
     else
       render action: "new"
     end

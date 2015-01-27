@@ -1,6 +1,4 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
 
   before_filter do
@@ -10,8 +8,29 @@ class ApplicationController < ActionController::Base
     }) if current_user
   end
 
+  def after_sign_in_path_for(resource)
+    session["user_return_to"] || root_url
+  end
+
+  def authenticate_user!
+    return true if doorkeeper_token && doorkeeper_token.accessible?
+    super
+  end
+
   def authenticate_admin!
-    return false unless authenticate_user!
-    current_user.super_admin?
+    authenticate_user!
+    unless current_user.super_admin?
+      head :forbidden
+    end
+  end
+
+  def current_user
+    if super
+      super
+    elsif doorkeeper_token && doorkeeper_token.accessible?
+      User.find(doorkeeper_token.resource_owner_id)
+    else
+      nil
+    end
   end
 end

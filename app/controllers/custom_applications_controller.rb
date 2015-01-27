@@ -1,3 +1,6 @@
 class CustomApplicationsController < Doorkeeper::ApplicationsController
-  before_filter :authenticate_admin!
+  before_action do
+    authenticate_user!
+    head :forbidden unless current_user.super_admin?
+  end
 end

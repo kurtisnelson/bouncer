@@ -1,11 +1,9 @@
 class MeController < ApplicationController
-  include Doorkeeper::Helpers::Controller
+  before_action :authenticate_user!
 
   def show
     if current_user
       render json: {user: current_user}, status: :ok
-    elsif doorkeeper_token && doorkeeper_token.accessible?
-      render json: {user: User.find(doorkeeper_token.resource_owner_id)}, status: :ok
     else
       error = Doorkeeper::OAuth::ErrorResponse.new(name: :invalid_request)
       response.headers.merge!(error.headers)
