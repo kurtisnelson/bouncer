@@ -12,9 +12,9 @@ class ApplicationController < ActionController::Base
     session["user_return_to"] || root_url
   end
 
-  def authenticate_user!
+  def authenticate_user!(favourite=nil)
     return true if doorkeeper_token && doorkeeper_token.accessible?
-    super
+    super()
   end
 
   def authenticate_admin!
@@ -24,9 +24,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def current_user
-    if super
-      super
+  def current_user(favourite=nil)
+    if super()
+      super()
     elsif doorkeeper_token && doorkeeper_token.accessible?
       User.find(doorkeeper_token.resource_owner_id)
     else
