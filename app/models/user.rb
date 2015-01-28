@@ -32,6 +32,11 @@ class User
     self.email
   end
 
+  # devise expects this
+  def assign_attributes(new_attributes, options={})
+    self.attributes=(new_attributes)
+  end
+
   def self.from_facebook(data, token)
     user = where(facebook_uid: data['id']).first
     if user == nil
