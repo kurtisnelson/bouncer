@@ -1,0 +1,10 @@
+#!/bin/sh
+
+bundle install
+
+echo
+echo
+echo "The project has been bootstrapped!"
+echo "Please do the following to complete setup:"
+echo
+echo "* Edit the .env file to satisfy the needed variables"

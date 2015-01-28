@@ -24,4 +24,4 @@ en:
   doorkeeper:
     scopes:
       user: 'Access your basic data'
-      machine: 'Act as a machine'
+      device: 'Act as a device'
