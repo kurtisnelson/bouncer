@@ -33,4 +33,12 @@ class ApplicationController < ActionController::Base
       nil
     end
   end
+
+  def current_device
+    if doorkeeper_token && doorkeeper_token.accessible?
+      Device.find(doorkeeper_token.resource_owner_id)
+    else
+      nil
+    end
+  end
 end

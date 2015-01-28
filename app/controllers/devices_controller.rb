@@ -1,6 +1,6 @@
 class DevicesController < ApplicationController
   before_action :authenticate_user!
-  before_action -> { doorkeeper_authorize! :machine }, only: :create
+  before_action -> { doorkeeper_authorize! :device }, only: :create
 
   def index
     if params[:serial]

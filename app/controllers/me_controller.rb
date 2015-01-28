@@ -2,8 +2,10 @@ class MeController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    if current_user
-      render json: {user: current_user}, status: :ok
+    if user = current_user
+      render json: {user: user}, status: :ok
+    elsif device = current_device
+      render json: {device: device}, status: :ok
     else
       error = Doorkeeper::OAuth::ErrorResponse.new(name: :invalid_request)
       response.headers.merge!(error.headers)
@@ -12,11 +14,8 @@ class MeController < ApplicationController
   end
 
   def update
-    if current_user
-      user = current_user
-    elsif doorkeeper_token && doorkeeper_token.accessible?
-      user = User.find(doorkeeper_token.resource_owner_id)
-    else
+    user = current_user
+    unless user
       error = Doorkeeper::OAuth::ErrorResponse.new(name: :invalid_request)
       response.headers.merge!(error.headers)
       render json: error.body, status: error.status

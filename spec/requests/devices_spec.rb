@@ -2,7 +2,7 @@ require 'request_helper'
 
 describe DevicesController do
   context 'user token' do
-    let!(:access_token) { FactoryGirl.create(:machine_access_token) }
+    let!(:access_token) { FactoryGirl.create(:device_access_token) }
     serial = "1234567890"
 
     it 'allows a device to be created' do

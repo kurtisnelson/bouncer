@@ -6,7 +6,7 @@ describe DevicesController do
       before do
         login_user
       end
-      
+
       it 'returns a list of devices owned by the user' do
         FactoryGirl.create(:device, user: @user)
         FactoryGirl.create(:device)

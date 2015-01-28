@@ -6,13 +6,23 @@ describe MeController do
       expect(response.status).to eq 401
     end
 
-    context "valid token" do
+    context "user token" do
       let!(:access_token) { FactoryGirl.create(:access_token) }
 
       it "succeeeds with a valid token" do
         get me_path(format: :json), access_token: access_token.token
         expect(response).to be_success
         expect(json["user"]).to_not be nil
+      end
+    end
+
+    context "device token" do
+      let!(:access_token) { FactoryGirl.create(:device_token) }
+
+      it "succeeds with a valid token" do
+        get me_path(format: :json), access_token: access_token.token
+        expect(response).to be_success
+        expect(json['device']).to_not be nil
       end
     end
   end

@@ -28,7 +28,7 @@ Doorkeeper.configure do
   grant_flows %w(assertion authorization_code client_credentials password)
 
   default_scopes :user
-  optional_scopes :machine
+  optional_scopes :device
 
   access_token_expires_in 2.hours
 
