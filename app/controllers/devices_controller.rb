@@ -26,7 +26,7 @@ class DevicesController < ApplicationController
     return head :forbidden unless current_user.super_admin? || @device.user_id == current_user.id
     @device.name = params['device']["name"]
     @device.serial = params['device']["serial"]
-    if current_user.super_admin? && params['device']['user']
+    if current_user.super_admin? && !params['device']['user'].blank?
       @device.user_id = params['device']['user']
     end
 
