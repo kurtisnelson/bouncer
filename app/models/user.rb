@@ -41,8 +41,8 @@ class User
     user = where(facebook_uid: data['id']).first
     if user == nil
       user = User.new
+      user.password = Devise.friendly_token[0,20]
     end
-    user.password = Devise.friendly_token[0,20] if user.password.blank?
     user.facebook_uid = data['id']
     user.facebook_token = token
     user.email = data['email']
