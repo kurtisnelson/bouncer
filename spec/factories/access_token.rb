@@ -7,6 +7,9 @@ FactoryGirl.define do
     factory :device_access_token do
       scopes "device"
     end
+    factory :admin_access_token do
+      resource_owner_id { create(:admin).id }
+    end
     factory :clientless_access_token do
       application nil
     end
