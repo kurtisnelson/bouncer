@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 ruby '2.2.0'
 gem 'rails', '4.2.0'
 
+gem 'analytics-ruby', '~> 2.0.0', :require => 'segment/analytics'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'bson_ext'
 gem 'devise', '~> 3.4.1'
