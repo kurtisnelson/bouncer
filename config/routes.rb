@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   post :me, to: 'me#update'
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
+  resources :users
   resources :devices do
     put :remove
   end

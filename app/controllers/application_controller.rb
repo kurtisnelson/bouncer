@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
     }) if current_user
   end
 
+  force_ssl if: :ssl_configured?
+
   def after_sign_in_path_for(resource)
     session["user_return_to"] || root_url
   end
@@ -40,5 +42,9 @@ class ApplicationController < ActionController::Base
     else
       nil
     end
+  end
+
+  def ssl_configured?
+    Rails.env.production?
   end
 end
