@@ -1,6 +1,6 @@
 class User
   include MongoMapper::Document
-  after_create :sync_details
+  after_create :async_details
   many :devices
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable, :confirmable,
@@ -75,8 +75,11 @@ class User
     end
   end
 
+  def async_details
+    SyncUserWorker.perform_async(self.id)
+  end
+
   def sync_details
-    #TODO make this method async
     get_avatar
     Analytics.identify(
       user_id: self.id,
