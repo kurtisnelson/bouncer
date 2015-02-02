@@ -2,10 +2,10 @@ class MeController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    if user = current_user
-      render json: {user: user}, status: :ok
-    elsif device = current_device
-      render json: {device: device}, status: :ok
+    if @user = current_user
+      render 'users/show'
+    elsif @device = current_device
+      render 'devices/show'
     else
       error = Doorkeeper::OAuth::ErrorResponse.new(name: :invalid_request)
       response.headers.merge!(error.headers)
@@ -23,7 +23,8 @@ class MeController < ApplicationController
     end
     user.phone = params["user"]["phone"]
     if user.save
-      render json: {user: user}, status: :ok
+      @user = user
+      render 'users/show'
     else
       head :bad_request
     end

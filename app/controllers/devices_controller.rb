@@ -73,7 +73,7 @@ class DevicesController < ApplicationController
       )
       respond_to do |format|
         format.html { redirect_to @device, notice: "Device was added" }
-        format.json { render action: "show" }
+        format.json { render :show }
       end
     else
       respond_to do |format|
@@ -85,6 +85,7 @@ class DevicesController < ApplicationController
 
   def show
     @device = Device.find(params[:id])
+    @token = @device.device_token
     return head :forbidden unless current_user.super_admin? || @device.user_id == current_user.id
   end
 end
