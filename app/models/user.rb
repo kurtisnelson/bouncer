@@ -1,6 +1,6 @@
 class User
   include MongoMapper::Document
-  after_create :get_avatar
+  after_create :sync_details
   many :devices
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable, :confirmable,
@@ -73,6 +73,19 @@ class User
         user.email = data["email"] if user.email.blank?
       end
     end
+  end
+
+  def sync_details
+    #TODO make this method async
+    get_avatar
+    Analytics.identify(
+      user_id: self.id,
+      traits: {
+        name: self.name,
+        email: self.email,
+        phone: self.phone,
+        created_at: DateTime.now
+      })
   end
 
   def get_avatar

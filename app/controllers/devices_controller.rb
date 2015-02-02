@@ -66,6 +66,11 @@ class DevicesController < ApplicationController
     @device.user_id = current_user.id
     @device.serial = serial
     if @device.save
+      Analytics.track(
+        user_id: current_user.id,
+        event: 'Created device',
+        properties: { serial: serial }
+      )
       respond_to do |format|
         format.html { redirect_to @device, notice: "Device was added" }
         format.json { render action: "show" }
