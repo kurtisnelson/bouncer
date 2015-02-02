@@ -5,6 +5,7 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 .env
 .mongodb
+dump.rdb
 *.swp
 # Ignore bundler config.
 /.bundle
