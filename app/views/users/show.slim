@@ -1,1 +1,7 @@
-h1 = @user.name
+h1 = @user.email
+
+dl
+  dt Admin
+  dd = @user.super_admin?
+
+= link_to "Grant Admin", user_admin_path(@user), method: :put

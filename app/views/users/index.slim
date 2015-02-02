@@ -4,10 +4,12 @@ table.table
       th Name
       th Phone
       th Email
+      th Admin
   tbody
     - @users.each do |user|
       tr
         td = user.name
         td = user.phone
         td = user.email
+        td = user.super_admin?
         td = link_to "Show", user_path(user)
