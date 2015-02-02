@@ -80,7 +80,9 @@ class User
   end
 
   def sync_details
-    get_avatar
+    get_facebook_picture
+    get_details
+    get_gravatar
     Analytics.identify(
       user_id: self.id,
       traits: {
@@ -91,8 +93,18 @@ class User
       })
   end
 
-  def get_avatar
-    return unless facebook_token
+  def get_details
+    return unless self.facebook_token
+    facebook = URI.parse('https://graph.facebook.com/me?access_token=' + self.facebook_token)
+    response = Net::HTTP.get_response(facebook)
+    if response.code == "200"
+      user_data = JSON.parse(response.body)
+      User.from_facebook(user_data, self.facebook_token)
+    end
+  end
+
+  def get_facebook_picture
+    return unless self.facebook_token
     facebook = URI.parse('https://graph.facebook.com/me/picture?redirect=false&type=square&access_token=' + self.facebook_token)
     response = Net::HTTP.get_response(facebook)
     if response.code == "200"
@@ -100,5 +112,15 @@ class User
       self.image = user_data['data']['url']
       self.save
     end
+  end
+
+  def get_gravatar
+    return unless self.email
+    return unless self.image == nil
+    email_address = self.email.downcase
+    hash = Digest::MD5.hexdigest(email_address)
+    image_src = "https://secure.gravatar.com/avatar/#{hash}?d=mm&s=50"
+    self.image = image_src
+    self.save
   end
 end
