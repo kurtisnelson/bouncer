@@ -1,6 +1,6 @@
 class DevicesController < ApplicationController
   before_action :authenticate_user!
-  before_action -> { doorkeeper_authorize! :device }, only: :create
+  before_action -> { current_user.super_admin? or doorkeeper_authorize! :device }, only: :create
   respond_to :json, :html
 
   def index
@@ -66,7 +66,12 @@ class DevicesController < ApplicationController
   def create
     serial = params['device']['serial'].tr('^A-Za-z0-9', '').downcase
     @device = Device.where(serial: serial).first
-    return head :forbidden if Device.where(serial: serial, :user_id.ne => current_user.id).first
+    if Device.where(serial: serial, :user_id.ne => current_user.id).first
+      respond_to do |f|
+        f.html { render action: "new" }
+        f.json { head :forbidden }
+      end
+    end
     @device = Device.new
     @device.user_id = current_user.id
     @device.serial = serial

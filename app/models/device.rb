@@ -21,6 +21,6 @@ class Device
   private
 
   def issue_token
-    Doorkeeper::DeviceToken.find_or_create_for(nil, self.id, "machine", 1.day, true)
+    Doorkeeper::DeviceToken.find_or_create_for(nil, self.id, "device", 1.day, true)
   end
 end
