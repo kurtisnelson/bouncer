@@ -13,6 +13,11 @@ class Device
     self.device_tokens.first
   end
 
+  def device_token_id
+    return unless device_token
+    device_token.id
+  end
+
   private
 
   def issue_token

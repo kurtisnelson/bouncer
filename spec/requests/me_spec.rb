@@ -12,7 +12,7 @@ describe MeController do
       it "succeeeds with a valid token" do
         get me_path(format: :json), access_token: access_token.token
         expect(response).to be_success
-        expect(json["user"]).to_not be nil
+        expect(json["users"]).to_not be nil
       end
     end
 
@@ -22,7 +22,7 @@ describe MeController do
       it "succeeds with a valid token" do
         get me_path(format: :json), access_token: access_token.token
         expect(response).to be_success
-        expect(json['device']).to_not be nil
+        expect(json['devices']).to_not be nil
       end
     end
   end

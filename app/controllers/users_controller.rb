@@ -1,11 +1,19 @@
 class UsersController < ApplicationController
   before_action :authenticate_admin!
+  represents :json, Users
+  respond_to :html
+
   def index
     @users = User.all
+    respond_to do |format|
+      format.json { render json: UsersRepresenter.for_collection.prepare(@users) }
+      format.html
+    end
   end
 
   def show
     @user = User.find(params[:id])
+    respond_with @user
   end
 
   def admin

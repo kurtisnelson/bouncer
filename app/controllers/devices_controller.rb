@@ -1,6 +1,7 @@
 class DevicesController < ApplicationController
   before_action :authenticate_user!
   before_action -> { doorkeeper_authorize! :device }, only: :create
+  respond_to :json, :html
 
   def index
     if params[:serial]
@@ -9,6 +10,10 @@ class DevicesController < ApplicationController
       @devices = Device.all
     else
       @devices = Device.where(user_id: current_user.id)
+    end
+    respond_to do |format|
+      format.json { render json: DevicesRepresenter.for_collection.prepare(@devices) }
+      format.html
     end
   end
 
@@ -73,7 +78,7 @@ class DevicesController < ApplicationController
       )
       respond_to do |format|
         format.html { redirect_to @device, notice: "Device was added" }
-        format.json { render :show }
+        format.json { render json: DevicesRepresenter.prepare(@device) }
       end
     else
       respond_to do |format|
@@ -87,5 +92,9 @@ class DevicesController < ApplicationController
     @device = Device.find(params[:id])
     @token = @device.device_token
     return head :forbidden unless current_user.super_admin? || @device.user_id == current_user.id
+    respond_to do |f|
+      f.html
+      f.json { render json: DevicesRepresenter.prepare(@device) }
+    end
   end
 end
