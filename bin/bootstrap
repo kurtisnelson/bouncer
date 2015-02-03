@@ -1,10 +1,28 @@
 #!/bin/sh
 
-bundle install
+brew_install_if_needed() {
+  package=$1
 
-echo
-echo
-echo "The project has been bootstrapped!"
-echo "Please do the following to complete setup:"
-echo
-echo "* Edit the .env file to satisfy the needed variables"
+  brew info $package | grep "Not installed" > /dev/null 2>&1
+  if [[ "$?" -eq "0" ]]; then
+    brew install $package
+  fi
+}
+
+add_git_remote_if_needed() {
+  name=$1
+  url=$2
+
+  git remote | grep $name > /dev/null 2>&1
+  if [[ "$?" -eq "1" ]]; then
+    git remote add $name $url
+  fi
+}
+
+brew_install_if_needed heroku-toolbelt
+brew_install_if_needed redis
+
+gem install bundler --no-ri --no-rdoc
+gem install foreman --no-ri --no-rdoc
+
+bundle install
