@@ -7,10 +7,7 @@
 default: &default
   adapter: postgresql
 
-development:
-  <<: *default
-  database: bouncer-dev
-
 test:
   <<: *default
-  database: bouncer-test
+  username: postgres
+  database: monsieur_test

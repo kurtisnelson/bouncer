@@ -1,10 +1,5 @@
 Doorkeeper.configure do
   use_refresh_token
-  # Change the ORM that doorkeeper will use.
-  # Currently supported options are :active_record, :mongoid2, :mongoid3,
-  # :mongoid4, :mongo_mapper
-  orm :mongo_mapper
-
   resource_owner_authenticator do
     current_user || redirect_to(new_user_session_url)
   end

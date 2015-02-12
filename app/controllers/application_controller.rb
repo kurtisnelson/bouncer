@@ -3,10 +3,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
 
   before_filter do
+    if doorkeeper_token && doorkeeper_token.accessible?
     Honeybadger.context({
-      user_id: current_user.id,
-      user_email: current_user.email
-    }) if current_user
+      user_id: doorkeeper_token.resource_owner_id,
+    })
+    end
   end
 
   force_ssl if: :ssl_configured?
@@ -31,7 +32,7 @@ class ApplicationController < ActionController::Base
     if super()
       super()
     elsif doorkeeper_token && doorkeeper_token.accessible?
-      User.find(doorkeeper_token.resource_owner_id)
+      User.find_by(id: doorkeeper_token.resource_owner_id)
     else
       nil
     end
@@ -39,7 +40,7 @@ class ApplicationController < ActionController::Base
 
   def current_device
     if doorkeeper_token && doorkeeper_token.accessible?
-      Device.find(doorkeeper_token.resource_owner_id)
+      Device.find_by(id: doorkeeper_token.resource_owner_id)
     else
       nil
     end

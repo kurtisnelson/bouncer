@@ -3,9 +3,14 @@ rvm:
   - 2.2.0
 cache: bundler
 bundler_args: --without production
-services:
-  - mongodb
 notifications:
   email: false
+before_script:
+  - cp config/database.yml.travis config/database.yml
+  - psql -c 'create database monsieur_test;' -U postgres
 script:
   - bundle exec rspec --format progress
+
+addons:
+  code_climate:
+    repo_token: 28ef2c2de9e18fceb1ecb56e66bc80d7adc5ad9bbf2635dc4a7b5c764d5e7636

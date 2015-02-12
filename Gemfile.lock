@@ -44,10 +44,10 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    addressable (2.3.6)
+    addressable (2.3.7)
     analytics-ruby (2.0.12)
     arel (6.0.0)
-    autoprefixer-rails (5.1.2)
+    autoprefixer-rails (5.1.5)
       execjs
       json
     axiom-types (0.1.1)
@@ -60,9 +60,6 @@ GEM
     bootstrap-sass (3.3.3)
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.2.19)
-    bson (1.12.0)
-    bson_ext (1.12.0)
-      bson (~> 1.12.0)
     builder (3.2.2)
     celluloid (0.16.0)
       timers (~> 4.0.0)
@@ -95,15 +92,15 @@ GEM
     diff-lcs (1.2.5)
     diffy (3.0.7)
     docile (1.1.5)
-    doorkeeper (2.1.0)
+    doorkeeper (2.1.1)
       railties (>= 3.1)
     dotenv (1.0.2)
     dotenv-rails (1.0.2)
       dotenv (= 1.0.2)
     equalizer (0.0.9)
     erubis (2.7.0)
-    excon (0.44.1)
-    execjs (2.2.2)
+    excon (0.44.2)
+    execjs (2.3.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.5.0)
@@ -118,12 +115,12 @@ GEM
     foreman (0.77.0)
       dotenv (~> 1.0.2)
       thor (~> 0.19.1)
-    globalid (0.3.0)
+    globalid (0.3.2)
       activesupport (>= 4.1.0)
-    hashie (3.3.2)
+    hashie (3.4.0)
     hike (1.2.3)
     hitimes (1.2.2)
-    honeybadger (2.0.1)
+    honeybadger (2.0.4)
     i18n (0.7.0)
     ice_nine (0.11.1)
     jquery-rails (4.0.3)
@@ -144,16 +141,6 @@ GEM
     mime-types (2.4.3)
     mini_portile (0.6.2)
     minitest (5.5.1)
-    mm-devise (2.0)
-      devise (>= 1.2)
-      mongo_mapper (>= 0.9.0)
-    mongo (1.12.0)
-      bson (= 1.12.0)
-    mongo_mapper (0.13.1)
-      activemodel (>= 3.0.0)
-      activesupport (>= 3.0)
-      mongo (~> 1.8)
-      plucky (~> 0.6.5)
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -180,8 +167,7 @@ GEM
     parse-ruby-client (0.3.0)
       faraday
       faraday_middleware
-    plucky (0.6.6)
-      mongo (~> 1.5)
+    pg (0.18.1)
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -223,10 +209,10 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.13.0)
     rake (10.4.2)
-    redis (3.2.0)
+    redis (3.2.1)
     redis-namespace (1.5.1)
       redis (~> 3.0, >= 3.0.4)
-    representable (2.1.4)
+    representable (2.1.5)
       multi_json
       nokogiri
       uber (~> 0.0.7)
@@ -265,7 +251,7 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (~> 1.1)
-    sidekiq (3.3.1)
+    sidekiq (3.3.2)
       celluloid (>= 0.16.0)
       connection_pool (>= 2.1.1)
       json
@@ -349,7 +335,6 @@ PLATFORMS
 DEPENDENCIES
   analytics-ruby (~> 2.0.0)
   bootstrap-sass (~> 3.3.3)
-  bson_ext
   codeclimate-test-reporter
   database_cleaner
   devise (~> 3.4.1)
@@ -362,12 +347,11 @@ DEPENDENCIES
   honeybadger
   jquery-rails
   mandrill-api
-  mm-devise
-  mongo_mapper
   newrelic_rpm
   omniauth
   omniauth-facebook
   parse-ruby-client
+  pg
   pry
   rack-cors
   rails (= 4.2.0)

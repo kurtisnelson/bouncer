@@ -66,7 +66,7 @@ class DevicesController < ApplicationController
   def create
     serial = params['device']['serial'].tr('^A-Za-z0-9', '').downcase
     @device = Device.where(serial: serial).first
-    if Device.where(serial: serial, :user_id.ne => current_user.id).first
+    if Device.where("serial = ? AND user_id != ?", serial, current_user.id).first
       respond_to do |f|
         f.html { render action: "new" }
         f.json { head :forbidden }
