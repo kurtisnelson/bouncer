@@ -44,6 +44,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'rspec-rails', '~> 3.0.0'
+  gem 'simplecov', require: false
   gem 'vcr'
   gem 'web-console', '~> 2.0'
   gem 'webmock'

@@ -1,3 +1,5 @@
+require 'simplecov'
+SimpleCov.start 'rails'
 require 'vcr'
 require 'sidekiq/testing'
 require 'webmock/rspec'

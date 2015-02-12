@@ -23,12 +23,12 @@ class DevicesController < ApplicationController
 
   def edit
     @device = Device.find(params["id"])
-    return head :forbidden unless current_user.super_admin? || @device.user_id == current_user.id
+    authenticate_admin_or_owner! @device
   end
 
   def update
     @device = Device.find(params["id"])
-    return head :forbidden unless current_user.super_admin? || @device.user_id == current_user.id
+    authenticate_admin_or_owner! @device
     @device.name = params['device']["name"]
     @device.serial = params['device']["serial"]
     if current_user.super_admin? && !params['device']['user'].blank?
@@ -44,7 +44,7 @@ class DevicesController < ApplicationController
 
   def remove
     @device = Device.find(params["device_id"])
-    return head :forbidden unless current_user.super_admin? || @device.user_id == current_user.id
+    authenticate_admin_or_owner! @device
     @device.user_id = nil
     if @device.save
       redirect_to device_path(@device)
@@ -55,7 +55,7 @@ class DevicesController < ApplicationController
 
   def destroy
     @device = Device.find(params["id"])
-    return head :forbidden unless current_user.super_admin? || @device.user_id == current_user.id
+    authenticate_admin_or_owner! @device
     if @device.destroy
       redirect_to devices_path
     else
@@ -96,10 +96,16 @@ class DevicesController < ApplicationController
   def show
     @device = Device.find(params[:id])
     @token = @device.device_token
-    return head :forbidden unless current_user.super_admin? || @device.user_id == current_user.id
+    authenticate_admin_or_owner! @device
     respond_to do |f|
       f.html
       f.json { render json: DevicesRepresenter.prepare(@device) }
     end
+  end
+
+  private
+
+  def authenticate_admin_or_owner! device
+    raise UnauthorizedError unless current_user.super_admin? || device.user_id == current_user.id
   end
 end

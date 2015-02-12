@@ -2,11 +2,17 @@ class ApplicationController < ActionController::Base
   include Roar::Rails::ControllerAdditions
   protect_from_forgery with: :null_session
 
+  UnauthorizedError        = Class.new(ActionController::ActionControllerError)
+  UnauthenticatedError     = Class.new(ActionController::ActionControllerError)
+
+  rescue_from UnauthorizedError, with: :unauthorized
+  rescue_from UnauthenticatedError, with: :unauthenticated
+
   before_filter do
     if doorkeeper_token && doorkeeper_token.accessible?
-    Honeybadger.context({
-      user_id: doorkeeper_token.resource_owner_id,
-    })
+      Honeybadger.context({
+        user_id: doorkeeper_token.resource_owner_id,
+      })
     end
   end
 
@@ -48,5 +54,14 @@ class ApplicationController < ActionController::Base
 
   def ssl_configured?
     Rails.env.production?
+  end
+
+  private
+  def unauthorized(error)
+    head :forbidden
+  end
+
+  def unauthenticated(error)
+    head :unauthorized
   end
 end

@@ -362,6 +362,7 @@ DEPENDENCIES
   sass-rails (>= 3.2)
   sidekiq
   simple_form
+  simplecov
   sinatra
   slim-rails
   turbolinks
