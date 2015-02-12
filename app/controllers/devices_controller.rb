@@ -30,7 +30,6 @@ class DevicesController < ApplicationController
     @device = Device.find(params["id"])
     authenticate_admin_or_owner! @device
     @device.name = params['device']["name"]
-    @device.serial = params['device']["serial"]
     if current_user.super_admin? && !params['device']['user'].blank?
       @device.user_id = params['device']['user']
     end

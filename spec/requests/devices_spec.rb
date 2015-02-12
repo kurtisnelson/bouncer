@@ -9,7 +9,7 @@ describe 'Device requests' do
       post devices_path(format: :json), access_token: access_token.token, device: {serial: serial}
       expect(response).to be_success
       expect(json['devices']['serial']).to eq serial
-      expect(json['devices']['links']['user']).to eq access_token.resource_owner_id.to_s
+      expect(json['devices']['links']['user']).to eq access_token.resource_owner_id
     end
 
     it 'assigns a token to a new device' do
@@ -23,6 +23,22 @@ describe 'Device requests' do
       post devices_path(format: :json), access_token: access_token.token, device: {serial: serial}
       post devices_path(format: :json), access_token: access_token.token, device: {serial: serial}
       expect(response.status).to eq 400
+    end
+
+    it 'does not allow a user to update another device' do
+      id = SecureRandom.uuid
+      FactoryGirl.create(:device, id: id)
+      patch device_path(id, format: :json), access_token: access_token.token
+      expect(response.status).to eq 403
+    end
+
+    it 'allows the device name to be changed' do
+      id = SecureRandom.uuid
+      FactoryGirl.create(:device, id: id, user_id: access_token.resource_owner_id)
+      name = Faker::Name.name
+      patch device_path(id, format: :json), access_token: access_token.token, device: {name: name }
+      expect(json['devices']['name']).to eq name
+      expect(json['devices']['links']['user']).to eq access_token.resource_owner_id
     end
   end
 
@@ -39,10 +55,10 @@ describe 'Device requests' do
       id = SecureRandom.uuid
       FactoryGirl.create(:device, id: id)
       name = Faker::Name.name
-      serial = SecureRandom.hex
-      patch device_path(id, format: :json), access_token: access_token.token, device: {name: name, serial: serial}
+      user = FactoryGirl.create(:user)
+      patch device_path(id, format: :json), access_token: access_token.token, device: {name: name, user: user.id}
       expect(json['devices']['name']).to eq name
-      expect(json['devices']['serial']).to eq serial
+      expect(json['devices']['links']['user']).to eq user.id
     end
   end
 
