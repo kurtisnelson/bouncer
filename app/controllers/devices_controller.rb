@@ -36,7 +36,10 @@ class DevicesController < ApplicationController
     end
 
     if @device.save
-      redirect_to @device, notice: "Device saved"
+      respond_to do |f|
+        f.html { redirect_to @device, notice: "Device saved" }
+        f.json { render json: DeviceRepresenter.prepare(@device) }
+      end
     else
       render action: "edit"
     end
@@ -83,7 +86,7 @@ class DevicesController < ApplicationController
       )
       respond_to do |format|
         format.html { redirect_to @device, notice: "Device was added" }
-        format.json { render json: DevicesRepresenter.prepare(@device) }
+        format.json { render json: DeviceRepresenter.prepare(@device) }
       end
     else
       respond_to do |format|
@@ -99,7 +102,7 @@ class DevicesController < ApplicationController
     authenticate_admin_or_owner! @device
     respond_to do |f|
       f.html
-      f.json { render json: DevicesRepresenter.prepare(@device) }
+      f.json { render json: DeviceRepresenter.prepare(@device) }
     end
   end
 

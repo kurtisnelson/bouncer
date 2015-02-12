@@ -1,10 +1,9 @@
 class MeController < ApplicationController
   before_action :authenticate_user!
-  represents :json, Users
 
   def show
     if @user = current_user
-      respond_with @user
+      render json: UsersRepresenter.prepare(@user)
     elsif @device = current_device
       render json: DevicesRepresenter.prepare(@device)
     else
@@ -24,7 +23,10 @@ class MeController < ApplicationController
     end
     user.phone = params["user"]["phone"]
     if user.save
-      respond_with user
+      respond_to do |f|
+        f.html { redirect_to user, notice: "User saved" }
+        f.json { render json: UsersRepresenter.prepare(user) }
+      end
     else
       head :bad_request
     end

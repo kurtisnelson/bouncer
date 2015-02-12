@@ -1,7 +1,5 @@
-module DeviceTokenRepresenter
+class DeviceTokenRepresenter < Roar::Decorator
   include Roar::JSON
-
-  property :id
   property :resource_owner_id
   property :refresh_token
   property :expires_in_seconds

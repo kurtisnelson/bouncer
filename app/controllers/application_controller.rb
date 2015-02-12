@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  include Roar::Rails::ControllerAdditions
   protect_from_forgery with: :null_session
 
   UnauthorizedError        = Class.new(ActionController::ActionControllerError)

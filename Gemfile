@@ -12,8 +12,6 @@ gem 'honeybadger'
 gem 'jquery-rails'
 gem 'pg'
 gem 'rack-cors'
-gem 'roar'
-gem 'roar-rails'
 gem 'sinatra', require: nil
 gem 'mandrill-api'
 gem 'newrelic_rpm'
@@ -21,6 +19,8 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'parse-ruby-client'
 gem 'rails_12factor', group: :production
+gem 'roar', github: "MonsieurCode/roar"
+gem 'roar-rails'
 gem 'sass-rails', '>= 3.2'
 gem 'sidekiq'
 gem 'simple_form'

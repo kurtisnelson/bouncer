@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   before_action :authenticate_admin!
-  represents :json, Users
   respond_to :html
 
   def index
@@ -13,7 +12,10 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    respond_with @user
+    respond_to do |f|
+      f.json { render json: UsersRepresenter.prepare(@user) }
+      f.html
+    end
   end
 
   def admin
