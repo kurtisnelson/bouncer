@@ -3,9 +3,11 @@ class ApplicationController < ActionController::Base
 
   UnauthorizedError        = Class.new(ActionController::ActionControllerError)
   UnauthenticatedError     = Class.new(ActionController::ActionControllerError)
+  BadRequestError          = Class.new(ActionController::ActionControllerError)
 
   rescue_from UnauthorizedError, with: :unauthorized
   rescue_from UnauthenticatedError, with: :unauthenticated
+  rescue_from BadRequestError, with: :bad_request
 
   before_filter do
     if doorkeeper_token && doorkeeper_token.accessible?
@@ -16,6 +18,10 @@ class ApplicationController < ActionController::Base
   end
 
   force_ssl if: :ssl_configured?
+
+  def render_json_api obj
+    render json: obj, content_type: 'application/vnd.api+json'
+  end
 
   def after_sign_in_path_for(resource)
     session["user_return_to"] || root_url
@@ -62,5 +68,9 @@ class ApplicationController < ActionController::Base
 
   def unauthenticated(error)
     head :unauthorized
+  end
+
+  def bad_request(error)
+    head :bad_request
   end
 end

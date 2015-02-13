@@ -12,7 +12,7 @@ h1 Devices
         tr
           td = link_to device.name, device_path(device)
           td = device.serial
-          - if current_user.super_admin? && device.user?
+          - if current_user.super_admin? && device.user_id?
             td = device.user.email
 
 p = link_to "Add Device", new_device_path
