@@ -7,20 +7,25 @@ Bouncer registers users and manages OAuth tokens.
 ## Token resource [/oauth/token]
 This endpoint provides token operations
 
-### Request a user token [POST]
+### Exchange credentials for token [POST]
+
+Scope is an optional field, `user` and `device` are valid. Password is the most common grant type.
 
 + Request (application/json)
 
     + Headers
         
-            Accepts: application/vnd.api+json
+            Accepts: application/json 
             
     + Body
         
             {
-                "grant_type": "password",
+                "grant_type": "password | assertion | refresh_token",
+                "scope": "user",
                 "username": "kurt@monsieur.co",
-                "password": "password"
+                "password": "password",
+                "assertion": "facebook token",
+                "refresh_token": "refresh token"
             }
 
 + Response 200
@@ -35,3 +40,52 @@ This endpoint provides token operations
                 "scope": "user",
                 "created_at": 1423841405
             }
+            
+## Device resource [/devices]
+
+### Create device [POST]
+
++ Request (application/json)
+
+    + Headers
+    
+            Accepts: application/json
+            Authorization: Bearer 3391f99c344af714903d69db38acf0f9a90383b4b251c6e9b84a580f53362e4f
+            
+    + Body
+    
+            { 
+                "devices":
+                    {
+                        "serial": "unique serial"
+                    }
+            }
+            
++ Response 200
+
+    + Body
+
+            {
+                "devices": {
+                    "id": "da6e4208-5509-475b-addb-6e0128d63279",
+                    "serial": "uniquestuff",
+                    "created_at": "2015-02-13T16:07:08.127Z",
+                    "links": {
+                        "user": "ed2aab70-d231-492b-b6a8-b27f2ed51769",
+                        "device_token": 3
+                    }
+                },
+                "linked": {
+                    "device_token": [
+                        {
+                            "resource_owner_id": "da6e4208-5509-475b-addb-6e0128d63279",
+                            "refresh_token": "23f4b88f72faf54e3b1f5a189cc6d4d035f9abf0bde17a7f8a77ccae2ed92619",
+                            "expires_in_seconds": 86400,
+                            "access_token": "4929a92b064252a4dae902bbef23284d4b564af1592eb208beb67cada4826b10"
+                        }
+                    ]
+                }
+            }
+
++ Response 403
++ Response 400
