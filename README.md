@@ -8,6 +8,8 @@ Bouncer
 
 Bouncer provides a simple endpoint to use for all authentication, including users and devices. Bouncer also allows users to log in via facebook and create devices.
 
+[API Documentation](http://docs.mbouncer.apiary.io/#) is available.
+
 Bouncer sends transactional emails via Mandrill templates
 
 ## Getting Started
