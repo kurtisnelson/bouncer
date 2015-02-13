@@ -3,3 +3,35 @@ HOST: https://mbouncer.herokuapp.com
 
 # Bouncer
 Bouncer registers users and manages OAuth tokens.
+
+## Token resource [/oauth/token]
+This endpoint provides token operations
+
+### Request a user token [POST]
+
++ Request (application/json)
+
+    + Headers
+        
+            Accepts: application/vnd.api+json
+            
+    + Body
+        
+            {
+                "grant_type": "password",
+                "username": "kurt@monsieur.co",
+                "password": "password"
+            }
+
++ Response 200
+
+    + Body
+    
+            {
+                "access_token": "hex",
+                "token_type": "bearer",
+                "expires_in": 7200,
+                "refresh_token": "hex",
+                "scope": "user",
+                "created_at": 1423841405
+            }
