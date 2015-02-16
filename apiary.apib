@@ -14,11 +14,11 @@ Scope is an optional field, `user` and `device` are valid. Password is the most 
 + Request (application/json)
 
     + Headers
-        
-            Accepts: application/json 
-            
+
+            Accepts: application/json
+
     + Body
-        
+
             {
                 "grant_type": "password | assertion | refresh_token",
                 "scope": "user",
@@ -31,7 +31,7 @@ Scope is an optional field, `user` and `device` are valid. Password is the most 
 + Response 200
 
     + Body
-    
+
             {
                 "access_token": "hex",
                 "token_type": "bearer",
@@ -40,7 +40,7 @@ Scope is an optional field, `user` and `device` are valid. Password is the most 
                 "scope": "user",
                 "created_at": 1423841405
             }
-            
+
 ## Device resource [/devices]
 
 ### Create device [POST]
@@ -48,19 +48,19 @@ Scope is an optional field, `user` and `device` are valid. Password is the most 
 + Request (application/json)
 
     + Headers
-    
+
             Accepts: application/json
             Authorization: Bearer 3391f99c344af714903d69db38acf0f9a90383b4b251c6e9b84a580f53362e4f
-            
+
     + Body
-    
-            { 
+
+            {
                 "devices":
                     {
                         "serial": "unique serial"
                     }
             }
-            
+
 + Response 200
 
     + Body
