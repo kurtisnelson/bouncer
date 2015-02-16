@@ -9,6 +9,10 @@ Rails.application.routes.draw do
 
   resources :users do
     put :admin
+    collection do
+      get :me, to: 'me#show'
+      post :me, to: 'me#update'
+    end
   end
 
   resources :devices do
