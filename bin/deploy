@@ -16,7 +16,7 @@ if [[ -n $(ack "binding.pry" --ignore-dir=bin) ]]; then
   esac
 fi
 
-if [[ -n $(ack '( |\t)$' --ignore-dir={spec/cassettes,public,db,log}) ]]; then
+if [[ -n $(bin/whitespace) ]]; then
   read -p "You have trailing whitespace; check yo'self before you wreck yo'self. Continue? (y/N) " yn
   case $yn in
     [Yy]* ) :;;
