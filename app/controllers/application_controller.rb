@@ -9,14 +9,6 @@ class ApplicationController < ActionController::Base
   rescue_from UnauthenticatedError, with: :unauthenticated
   rescue_from BadRequestError, with: :bad_request
 
-  before_filter do
-    if doorkeeper_token && doorkeeper_token.accessible?
-      Honeybadger.context({
-        user_id: doorkeeper_token.resource_owner_id,
-      })
-    end
-  end
-
   force_ssl if: :ssl_configured?
 
   def render_json_api obj

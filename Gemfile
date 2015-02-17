@@ -8,7 +8,6 @@ gem 'bootstrap-sass', '~> 3.3.3'
 gem 'devise', '~> 3.4.1'
 gem 'doorkeeper'
 gem 'doorkeeper-grants_assertion', github: "uniiverse/doorkeeper-grants_assertion"
-gem 'honeybadger'
 gem 'jquery-rails'
 gem 'pg'
 gem 'rack-cors'
@@ -21,6 +20,7 @@ gem 'parse-ruby-client'
 gem 'rails_12factor', group: :production
 gem 'roar', github: "MonsieurCode/roar"
 gem 'roar-rails'
+gem 'rollbar'
 gem 'sass-rails', '>= 3.2'
 gem 'sidekiq'
 gem 'simple_form'
