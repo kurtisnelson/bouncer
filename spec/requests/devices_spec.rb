@@ -7,7 +7,7 @@ describe 'Device requests' do
 
     it 'allows a device to be created' do
       post devices_path(format: :json), access_token: access_token.token, devices: {serial: serial}
-      expect(response).to be_success
+      expect(response.status).to eq 200
       expect(json['devices']['serial']).to eq serial
       expect(json['devices']['links']['user']).to eq access_token.resource_owner_id
     end
@@ -21,6 +21,7 @@ describe 'Device requests' do
 
     it 'does not allow a duplicate device to be created' do
       post devices_path(format: :json), access_token: access_token.token, devices: {serial: serial}
+      expect(response.status).to eq 200
       post devices_path(format: :json), access_token: access_token.token, devices: {serial: serial}
       expect(response.status).to eq 400
     end

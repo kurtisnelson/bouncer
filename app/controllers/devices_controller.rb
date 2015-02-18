@@ -1,7 +1,7 @@
 class DevicesController < ApplicationController
   before_action :authenticate_user!
   before_action -> { current_user.super_admin? or doorkeeper_authorize! :device }, only: :create
-  respond_to :json, :json_api, :html
+  respond_to :json, :html
 
   def index
     if params[:serial]
@@ -13,7 +13,6 @@ class DevicesController < ApplicationController
     end
     respond_to do |format|
       format.json { render json: DevicesRepresenter.for_collection.prepare(@devices) }
-      format.json_api { render_json_api DevicesRepresenter.for_collection.prepare(@devices) }
       format.html
     end
   end
@@ -40,7 +39,6 @@ class DevicesController < ApplicationController
       respond_to do |f|
         f.html { redirect_to @device, notice: "Device saved" }
         f.json { render json: DeviceRepresenter.prepare(@device) }
-        f.json_api { render_json_api DevicesRepresenter.prepare(@device) }
       end
     else
       render action: "edit"
@@ -74,7 +72,6 @@ class DevicesController < ApplicationController
       respond_to do |f|
         f.html { render action: "new" }
         f.json { head :forbidden }
-        f.json_api { head :forbidden }
       end
     end
     @device = Device.new
@@ -89,13 +86,11 @@ class DevicesController < ApplicationController
       respond_to do |format|
         format.html { redirect_to @device, notice: "Device was added" }
         format.json { render json: DeviceRepresenter.prepare(@device) }
-        format.json_api { render_json_api DeviceRepresenter.prepare(@device) }
       end
     else
       respond_to do |format|
         format.html { render action: "new" }
         format.json { head :bad_request }
-        format.json_api { head :bad_request }
       end
     end
   end
@@ -107,7 +102,6 @@ class DevicesController < ApplicationController
     respond_to do |f|
       f.html
       f.json { render json: DeviceRepresenter.prepare(@device) }
-      f.json_api { render_json_api DeviceRepresenter.prepare(@device) }
     end
   end
 
