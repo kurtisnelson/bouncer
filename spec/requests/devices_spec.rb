@@ -7,21 +7,21 @@ describe 'Device requests' do
 
     it 'allows a device to be created' do
       post devices_path(format: :json), access_token: access_token.token, devices: {serial: serial}
-      expect(response.status).to eq 200
-      expect(json['devices']['serial']).to eq serial
-      expect(json['devices']['links']['user']).to eq access_token.resource_owner_id
+      expect(response.status).to eq 201
+      expect(json['devices'][0]['serial']).to eq serial
+      expect(json['devices'][0]['links']['user']).to eq access_token.resource_owner_id
     end
 
     it 'assigns a token to a new device' do
       post devices_path(format: :json), access_token: access_token.token, devices: {serial: serial}
-      expect(json['linked']['device_token'][0]).to_not be_empty
-      expect(json['linked']['device_token'][0]['access_token']).to_not be_empty
-      expect(json['linked']['device_token'][0]['refresh_token']).to_not be_empty
+      expect(json['linked']['device_tokens'][0]).to_not be_empty
+      expect(json['linked']['device_tokens'][0]['access_token']).to_not be_empty
+      expect(json['linked']['device_tokens'][0]['refresh_token']).to_not be_empty
     end
 
     it 'does not allow a duplicate device to be created' do
       post devices_path(format: :json), access_token: access_token.token, devices: {serial: serial}
-      expect(response.status).to eq 200
+      expect(response.status).to eq 201
       post devices_path(format: :json), access_token: access_token.token, devices: {serial: serial}
       expect(response.status).to eq 400
     end
@@ -38,8 +38,7 @@ describe 'Device requests' do
       FactoryGirl.create(:device, id: id, user_id: access_token.resource_owner_id)
       name = Faker::Name.name
       patch device_path(id, format: :json), access_token: access_token.token, devices: {name: name }
-      expect(json['devices']['name']).to eq name
-      expect(json['devices']['links']['user']).to eq access_token.resource_owner_id
+      expect(response.status).to eq 204
     end
   end
 
@@ -58,8 +57,7 @@ describe 'Device requests' do
       name = Faker::Name.name
       user = FactoryGirl.create(:user)
       patch device_path(id, format: :json), access_token: access_token.token, devices: {name: name, user: user.id}
-      expect(json['devices']['name']).to eq name
-      expect(json['devices']['links']['user']).to eq user.id
+      expect(response.status).to eq 204
     end
   end
 

@@ -1,7 +1,6 @@
 Rails.application.configure do
   host = 'https://bouncer.monsieur.co'
   config.action_mailer.default_url_options = { host: host }
-  config.representer.default_url_options = { host: host }
 
   # Code is not reloaded between requests.
   config.cache_classes = true

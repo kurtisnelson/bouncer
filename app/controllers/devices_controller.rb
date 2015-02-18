@@ -11,10 +11,7 @@ class DevicesController < ApplicationController
     else
       @devices = Device.where(user_id: current_user.id)
     end
-    respond_to do |format|
-      format.json { render json: DevicesRepresenter.for_collection.prepare(@devices) }
-      format.html
-    end
+    respond_with @devices
   end
 
   def new
@@ -38,7 +35,7 @@ class DevicesController < ApplicationController
     if @device.save
       respond_to do |f|
         f.html { redirect_to @device, notice: "Device saved" }
-        f.json { render json: DeviceRepresenter.prepare(@device) }
+        f.json { respond_with @device }
       end
     else
       render action: "edit"
@@ -85,7 +82,7 @@ class DevicesController < ApplicationController
       )
       respond_to do |format|
         format.html { redirect_to @device, notice: "Device was added" }
-        format.json { render json: DeviceRepresenter.prepare(@device) }
+        format.json { respond_with @device }
       end
     else
       respond_to do |format|
@@ -99,10 +96,7 @@ class DevicesController < ApplicationController
     @device = Device.find(params[:id])
     @token = @device.device_token
     authenticate_admin_or_owner! @device
-    respond_to do |f|
-      f.html
-      f.json { render json: DeviceRepresenter.prepare(@device) }
-    end
+    respond_with @device
   end
 
   private

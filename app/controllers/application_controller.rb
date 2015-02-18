@@ -11,10 +11,6 @@ class ApplicationController < ActionController::Base
 
   force_ssl if: :ssl_configured?
 
-  def render_json_api obj
-    render json: obj, content_type: 'application/vnd.api+json'
-  end
-
   def after_sign_in_path_for(resource)
     session["user_return_to"] || root_url
   end

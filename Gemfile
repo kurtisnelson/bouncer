@@ -4,6 +4,7 @@ ruby '2.2.0'
 gem 'rails', '4.2.0'
 
 gem 'analytics-ruby', '~> 2.0.0', :require => 'segment/analytics'
+gem 'active_model_serializers', '~> 0.9'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'devise', '~> 3.4.1'
 gem 'doorkeeper'
@@ -18,8 +19,6 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'parse-ruby-client'
 gem 'rails_12factor', group: :production
-gem 'roar', github: "MonsieurCode/roar"
-gem 'roar-rails'
 gem 'rollbar'
 gem 'sass-rails', '>= 3.2'
 gem 'sidekiq'
