@@ -16,6 +16,15 @@ class ApplicationController < ActionController::Base
     session["user_return_to"] || root_url
   end
 
+  def current_service
+    return false unless request.headers['authorization']
+    auth = request.headers['authorization'].split(' ')
+    return false unless auth[0] == 'Service'
+    token = ServiceToken.where(token: auth[1]).first
+    return false unless token
+    token.name
+  end
+
   def authenticate_user!(favourite=nil)
     return true if doorkeeper_token && doorkeeper_token.accessible?
     super()

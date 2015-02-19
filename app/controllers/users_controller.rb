@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_admin!
+  before_filter :authenticate
   respond_to :html, :json
 
   def index
@@ -21,5 +21,12 @@ class UsersController < ApplicationController
       flash[:error] = "Could not grant admin"
     end
     respond_with @user
+  end
+
+  private
+
+  def authenticate
+    return true if current_service == 'cashier'
+    authenticate_admin!
   end
 end
