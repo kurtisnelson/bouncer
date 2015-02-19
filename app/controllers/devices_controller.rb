@@ -2,6 +2,7 @@ class DevicesController < ApplicationController
   before_action :authenticate_user!
   before_action -> { current_user.super_admin? or doorkeeper_authorize! :device }, only: :create
   respond_to :json, :html
+  responders :flash, :http_cache
 
   def index
     if params[:serial]
@@ -80,10 +81,7 @@ class DevicesController < ApplicationController
         event: 'Created device',
         properties: { serial: serial }
       )
-      respond_to do |format|
-        format.html { redirect_to @device, notice: "Device was added" }
-        format.json { respond_with @device }
-      end
+      respond_with @device
     else
       respond_to do |format|
         format.html { render action: "new" }
