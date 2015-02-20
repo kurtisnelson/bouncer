@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   end
   root 'page#index'
   get :me, to: 'me#show'
-  post :me, to: 'me#update'
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
   resources :users do
