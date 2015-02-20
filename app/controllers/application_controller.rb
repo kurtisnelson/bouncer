@@ -19,10 +19,13 @@ class ApplicationController < ActionController::Base
   def current_service
     return false unless request.headers['authorization']
     auth = request.headers['authorization'].split(' ')
-    return false unless auth[0] == 'Service'
-    token = ServiceToken.where(token: auth[1]).first
-    return false unless token
-    token.name
+    return false unless auth[0] == 'JWT'
+    begin
+      token = JWT.decode(auth[1], ENV['JWT_SECRET'])
+      token[0]['service']
+    rescue JWT::DecodeError
+      nil
+    end
   end
 
   def authenticate_user!(favourite=nil)
