@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   def authenticate_admin!
     authenticate_user!
     unless current_user.super_admin?
-      head :forbidden
+      raise UnauthorizedError
     end
   end
 

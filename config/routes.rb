@@ -8,11 +8,9 @@ Rails.application.routes.draw do
 
   resources :users do
     put :admin
-    collection do
-      get :me, to: 'me#show'
-      post :me, to: 'me#update'
-    end
   end
+  match 'users/me' => 'users#show', via: :get
+  match 'users/me' => 'users#update', via: :post
 
   resources :devices do
     put :remove
