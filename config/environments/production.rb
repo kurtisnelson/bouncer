@@ -1,7 +1,7 @@
 Rails.application.configure do
   host = 'https://bouncer.monsieur.co'
   config.action_mailer.default_url_options = { host: host }
-
+  config.lograge.enabled = true
   # Code is not reloaded between requests.
   config.cache_classes = true
 

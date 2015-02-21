@@ -10,6 +10,7 @@ gem 'devise', '~> 3.4.1'
 gem 'doorkeeper'
 gem 'doorkeeper-grants_assertion', github: "uniiverse/doorkeeper-grants_assertion"
 gem 'jquery-rails'
+gem 'lograge'
 gem 'pg'
 gem 'rack-cors'
 gem 'sinatra', require: nil
