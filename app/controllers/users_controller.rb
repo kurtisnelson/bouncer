@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
   respond_to :html, :json
 
   def index
@@ -8,10 +9,12 @@ class UsersController < ApplicationController
   end
 
   def show
-    if params[:id] == 'me'
+    if params[:id] == 'me' &&
       @user = current_user
-    elsif current_service == 'cashier' || authenticate_admin!
+    elsif current_service == 'cashier' || current_user.super_admin?
       @user = User.find(params[:id])
+    else
+      raise UnauthorizedError
     end
     respond_with @user
   end
@@ -33,7 +36,7 @@ class UsersController < ApplicationController
   end
 
   def admin
-    authenticate_admin1
+    authenticate_admin!
     @user = User.find(params[:user_id])
     @user.super_admin = true
     if @user.save

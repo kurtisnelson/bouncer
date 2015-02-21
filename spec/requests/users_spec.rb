@@ -1,27 +1,55 @@
 require 'request_helper'
 
-describe 'User requests' do
-  let(:user_token) { FactoryGirl.create(:access_token) }
+describe 'User Requests' do
+  let(:user_token) { FactoryGirl.create(:access_token).token }
+  let(:super_admin_token) { FactoryGirl.create(:admin_access_token).token }
 
-  it 'fails for plain users' do
-    get users_path(format: :json), access_token: user_token.token
-    expect(response.status).to eq 403
+  describe 'GET /users' do
+    it 'is unauthorized' do
+      get users_path(format: :json), access_token: user_token
+      expect(response.status).to eq 403
+    end
+    context 'admin' do
+      it 'lists' do
+        get users_path(format: :json), access_token: super_admin_token
+        expect(response.status).to eq 200
+      end
+    end
+  end
+
+  describe 'GET /users/:id' do
+    context 'admin' do
+      it 'shows the user if admin' do
+        user = FactoryGirl.create(:user)
+        get user_path(user.id, format: :json), access_token: super_admin_token
+        expect(response).to be_success
+        expect(json['users'].count).to eq 1
+      end
+    end
+
+    context 'user' do
+      it 'rejects' do
+        user = FactoryGirl.create(:user)
+        get user_path(user.id, format: :json), access_token: user_token
+        expect(response.status).to eq 403
+      end
+    end
   end
 
   describe 'POST /users/me' do
     it "fails without a token" do
-      post '/users/me.json'
+      post users_me_path(format: :json)
       expect(response.status).to eq 401
     end
 
-    context 'valid token' do
+    context 'valid token for user' do
       let!(:application) { FactoryGirl.create :application } # OAuth application
       let!(:user)        { FactoryGirl.create :user }
       let!(:access_token)       { FactoryGirl.create(:access_token, :application => application, :resource_owner_id => user.id) }
 
       it 'allows phone number to be updated' do
         number = "1234567890"
-        post '/users/me.json', access_token: access_token.token, user: {phone: number}
+        post users_me_path(format: :json), access_token: access_token.token, user: {phone: number}
         expect(response).to be_success
         user.reload
         expect(user.phone).to eq number
@@ -29,18 +57,4 @@ describe 'User requests' do
     end
   end
 
-  context "admin" do
-    let(:admin_token) { FactoryGirl.create(:admin_access_token) }
-
-    it 'indexes users' do
-      get users_path(format: :json), access_token: admin_token.token
-      expect(response.status).to eq 200
-    end
-
-    it 'shows a user' do
-      user = FactoryGirl.create(:user)
-      get users_path(user.id, format: :json), access_token: admin_token.token
-      expect(response).to be_success
-    end
-  end
 end
