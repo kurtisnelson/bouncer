@@ -42,6 +42,16 @@ describe 'Device requests' do
     end
   end
 
+  context 'device token' do
+    let(:access_token) { FactoryGirl.create(:device_token) }
+
+    it 'allows the device name to be changed' do
+      name = Faker::Name.name
+      patch device_path(access_token.resource_owner_id, format: :json), access_token: access_token.token, devices: {name: name}
+      expect(response.status).to eq 204
+    end
+  end
+
   context 'admin token' do
     let(:access_token) { FactoryGirl.create(:admin_access_token) }
 

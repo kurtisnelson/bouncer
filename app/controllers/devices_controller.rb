@@ -29,7 +29,7 @@ class DevicesController < ApplicationController
     authenticate_admin_or_owner! @device
 
     @device.name = device_json["name"]
-    if current_user.super_admin? && !device_json['user'].blank?
+    if current_user && current_user.super_admin? && !device_json['user'].blank?
       @device.user_id = device_json['user']
     end
 
@@ -110,6 +110,9 @@ class DevicesController < ApplicationController
   end
 
   def authenticate_admin_or_owner! device
-    raise UnauthorizedError unless current_user.super_admin? || device.user_id == current_user.id
+    return if current_user && current_user.super_admin?
+    return if current_user && current_user.id = device.user_id
+    return if current_device && current_device.id = device.id
+    raise UnauthorizedError
   end
 end
