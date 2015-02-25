@@ -54,6 +54,11 @@ describe 'User Requests' do
         user.reload
         expect(user.phone).to eq number
       end
+
+      it 'fails gracefully with bad params' do
+        post users_me_path(format: :json), access_token: access_token.token, usersss: {}
+        expect(response.status).to eq 400
+      end
     end
   end
 

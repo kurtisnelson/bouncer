@@ -27,6 +27,7 @@ class UsersController < ApplicationController
     else
       user = current_user
     end
+    raise BadRequestError if params['user'].blank?
     user.phone = params["user"]["phone"]
     if user.save
       respond_with user
