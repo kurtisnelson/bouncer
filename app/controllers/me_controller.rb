@@ -1,6 +1,6 @@
 class MeController < ApplicationController
   before_action :authenticate_user!
-  respond_to :json, :html
+  respond_to :json
 
   def show
     if @user = current_user
