@@ -67,6 +67,7 @@ class DevicesController < ApplicationController
   def create
     serial = device_json['serial'].tr('^A-Za-z0-9', '').downcase
     if Device.where("serial = ? AND user_id != ?", serial, current_user.id).count > 0
+      Rollbar.info("devices/create forbidden", serial: serial, service: current_service, user: current_user)
       respond_to do |f|
         f.html { render action: "new" }
         f.json { head :forbidden }

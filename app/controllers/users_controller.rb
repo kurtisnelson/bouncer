@@ -14,6 +14,7 @@ class UsersController < ApplicationController
     elsif current_service == 'cashier' || current_user.super_admin?
       @user = User.find(params[:id])
     else
+      Rollbar.info("users/show denied", id: params[:id], service: current_service, user: current_user)
       raise UnauthorizedError
     end
     respond_with @user
