@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
   respond_to :html, :json
 
   def index
@@ -9,9 +8,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    if params[:id] == 'me' &&
+    if params[:id] == 'me'
       @user = current_user
-    elsif current_service == 'cashier' || current_user.super_admin?
+    elsif current_service == 'cashier' || (current_user && current_user.super_admin?)
       @user = User.find(params[:id])
     else
       Rollbar.info("users/show denied", id: params[:id], service: current_service, user: current_user)
@@ -21,7 +20,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    authenticate_user!
+    authenticate!
     if params[:id]
       head :forbidden
       return

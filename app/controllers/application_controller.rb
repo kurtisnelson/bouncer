@@ -28,8 +28,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def authenticate!
+    authenticate_user!
+  end
+
   def authenticate_user!(favourite=nil)
     return true if doorkeeper_token && doorkeeper_token.accessible?
+    return true if current_service
     super()
   end
 

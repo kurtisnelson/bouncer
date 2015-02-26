@@ -1,14 +1,15 @@
 class DevicesController < ApplicationController
-  before_action :authenticate_user!
-  before_action -> { current_user.super_admin? or doorkeeper_authorize! :device }, only: :create
+  before_action :authenticate!
   respond_to :json, :html
   responders :flash, :http_cache
 
   def index
     if params[:serial]
       @devices = Device.where(serial: params[:serial], user_id: current_user.id)
-    elsif current_user.super_admin?
+    elsif current_user && current_user.super_admin?
       @devices = Device.all
+    elsif current_device
+      @devices = [current_device]
     else
       @devices = Device.where(user_id: current_user.id)
     end
@@ -65,6 +66,7 @@ class DevicesController < ApplicationController
   end
 
   def create
+    doorkeeper_authorize! :device unless current_user.super_admin?
     serial = device_json['serial'].tr('^A-Za-z0-9', '').downcase
     if Device.where("serial = ? AND user_id != ?", serial, current_user.id).count > 0
       Rollbar.info("devices/create forbidden", serial: serial, service: current_service, user: current_user)

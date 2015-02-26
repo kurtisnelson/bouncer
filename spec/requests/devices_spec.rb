@@ -14,6 +14,7 @@ describe 'Device requests' do
 
     it 'assigns a token to a new device' do
       post devices_path(format: :json), access_token: access_token.token, devices: {serial: serial}
+      expect(response).to be_success
       expect(json['linked']['device_tokens'][0]).to_not be_empty
       expect(json['linked']['device_tokens'][0]['access_token']).to_not be_empty
       expect(json['linked']['device_tokens'][0]['refresh_token']).to_not be_empty
