@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     if user.save
       respond_with user
     else
-      head :bad_request
+      render json: {errors: user.errors}, status: :unprocessable_entity
     end
   end
 

@@ -1,8 +1,25 @@
 h1 = @device.id
-h2 = @device.serial
+p.lead
+  ' Serial:
+  = @device.serial
 - if @device.user
   p
     ' Managed by
     = @device.user.email
-= link_to "Edit", edit_device_path(@device)
-= link_to "Remove", device_remove_path(@device), method: :put
+  = link_to "Remove User", device_remove_path(@device), method: :put
+
+table.table
+  thead
+    tr
+      th Token
+      th Created
+      th Expired?
+  tbody
+    - for token in @device.device_tokens
+      tr
+        - if token.expired?
+          td = token.token
+        - else
+          td = token.token[0..10] + "****************"
+        td = token.created_at
+        td = token.expired?

@@ -1,7 +1,6 @@
 class DevicesController < ApplicationController
   before_action :authenticate!
   respond_to :json, :html
-  responders :flash, :http_cache
 
   def index
     if params[:serial]
@@ -20,37 +19,26 @@ class DevicesController < ApplicationController
     @device = Device.new
   end
 
-  def edit
-    @device = Device.find(params["id"])
-    authenticate_admin_or_owner! @device
-  end
-
-  def update
-    @device = Device.find(params["id"])
-    authenticate_admin_or_owner! @device
-
-    if current_user && current_user.super_admin? && !device_json['user'].blank?
-      @device.user_id = device_json['user']
-    end
-
+  def claim
+    @device = Device.find(params["device_id"])
+    raise UnauthorizedError if @device.user
+    @device.user_id = current_user.id
     if @device.save
-      respond_to do |f|
-        f.html { redirect_to @device, notice: "Device saved" }
-        f.json { respond_with @device }
-      end
+      render json: @device
     else
-      render action: "edit"
+      render json: {errors: @device.errors}, status: :unprocessable_entity
     end
   end
 
-  def remove
+  def unclaim
     @device = Device.find(params["device_id"])
     authenticate_admin_or_owner! @device
     @device.user_id = nil
+    @device.device_tokens.destroy_all
     if @device.save
-      redirect_to device_path(@device)
+      respond_with @device
     else
-      render action: "show"
+      render json: {errors: @device.errors}, status: :unprocessable_entity
     end
   end
 

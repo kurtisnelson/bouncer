@@ -4,6 +4,8 @@ HOST: https://mbouncer.herokuapp.com
 # Bouncer
 Bouncer registers users and manages OAuth tokens.
 
+# Group Token
+
 ## Token resource [/oauth/token]
 This endpoint provides token operations
 
@@ -41,7 +43,38 @@ Scope is an optional field, `user` and `device` are valid. Password is the most 
                 "created_at": 1423841405
             }
 
-## Device resource [/devices]
+# Group Device
+
+## Device [/device/{id}]
+
++ Parameters
+    + id (string) ... UUID of the device
+
++ Model (application/vnd.api+json)
+
+    + Body
+
+                {"devices": [
+                    {
+                        "id":"01b6beb7-41f0-40f3-86ee-233a1d8b000e",
+                        "serial": "0000-000000-0000,
+                        "links": {
+                            "user":"e4569f9a-f2b8-4875-a093-e87a329fbb15",
+                        }
+                    }
+                ]}
+
+### Retrieve a Device [GET]
+
++ Response 200
+
+    [Device][]
+
+### Claim a device [PUT /claim]
+
+### Unclaim a device [PUT /unclaim]
+
+## Devices Collection [/devices]
 
 ### Create device [POST]
 

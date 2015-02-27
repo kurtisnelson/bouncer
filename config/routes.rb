@@ -12,7 +12,8 @@ Rails.application.routes.draw do
   match 'users/me' => 'users#show', via: :get
   match 'users/me' => 'users#update', via: :post
 
-  resources :devices, except: [:destroy] do
-    put :remove
+  resources :devices, except: [:destroy, :update, :edit] do
+    put :claim
+    put :unclaim
   end
 end

@@ -27,29 +27,20 @@ describe 'Device requests' do
       expect(response.status).to eq 400
     end
 
-    it 'does not allow a user to update another device' do
-      id = SecureRandom.uuid
-      FactoryGirl.create(:device, id: id)
-      patch device_path(id, format: :json), access_token: access_token.token
-      expect(response.status).to eq 403
-    end
-
-    it 'allows the device name to be changed' do
-      id = SecureRandom.uuid
-      FactoryGirl.create(:device, id: id, user_id: access_token.resource_owner_id)
-      name = Faker::Name.name
-      patch device_path(id, format: :json), access_token: access_token.token, devices: {name: name }
-      expect(response.status).to eq 204
+    it 'allows a user to claim a device' do
+      device = FactoryGirl.create(:device)
+      put device_claim_path(device, format: :json), access_token: access_token.token
+      expect(response).to be_success
+      expect(json['devices'][0]['links']['user']).to eq access_token.resource_owner_id
     end
   end
 
   context 'device token' do
     let(:access_token) { FactoryGirl.create(:device_token) }
 
-    it 'allows the device name to be changed' do
-      name = Faker::Name.name
-      patch device_path(access_token.resource_owner_id, format: :json), access_token: access_token.token, devices: {name: name}
-      expect(response.status).to eq 204
+    it 'allows the device to be unclaimed' do
+      put device_unclaim_path(access_token.resource_owner_id, format: :json), access_token: access_token.token
+      expect(response).to be_success
     end
   end
 
@@ -62,12 +53,9 @@ describe 'Device requests' do
       expect(json['devices'].count).to eq 5
     end
 
-    it 'allows updating the device name and user' do
-      id = SecureRandom.uuid
-      FactoryGirl.create(:device, id: id)
-      name = Faker::Name.name
-      user = FactoryGirl.create(:user)
-      patch device_path(id, format: :json), access_token: access_token.token, devices: {name: name, user: user.id}
+    it 'allows removing the device user' do
+      device = FactoryGirl.create(:device, user: FactoryGirl.create(:user))
+      put device_unclaim_path(device.id, format: :json), access_token: access_token.token
       expect(response.status).to eq 204
     end
   end

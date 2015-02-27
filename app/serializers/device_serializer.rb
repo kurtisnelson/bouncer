@@ -1,5 +1,5 @@
 class DeviceSerializer < JsonApiSerializer
-  attributes :id, :name, :serial, :created_at
+  attributes :id, :serial, :created_at
   attributes :links
 
   def links
