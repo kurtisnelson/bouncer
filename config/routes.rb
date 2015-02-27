@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   match 'users/me' => 'users#show', via: :get
   match 'users/me' => 'users#update', via: :post
 
-  resources :devices do
+  resources :devices, except: [:destroy] do
     put :remove
   end
 end

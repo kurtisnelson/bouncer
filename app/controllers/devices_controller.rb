@@ -29,7 +29,6 @@ class DevicesController < ApplicationController
     @device = Device.find(params["id"])
     authenticate_admin_or_owner! @device
 
-    @device.name = device_json["name"]
     if current_user && current_user.super_admin? && !device_json['user'].blank?
       @device.user_id = device_json['user']
     end
@@ -50,16 +49,6 @@ class DevicesController < ApplicationController
     @device.user_id = nil
     if @device.save
       redirect_to device_path(@device)
-    else
-      render action: "show"
-    end
-  end
-
-  def destroy
-    @device = Device.find(params["id"])
-    authenticate_admin_or_owner! @device
-    if @device.destroy
-      redirect_to devices_path
     else
       render action: "show"
     end

@@ -5,12 +5,12 @@ h1 Devices
   table.table
     thead
       tr
-        th Name
+        th ID
         th Serial
     tbody
       - @devices.each do |device|
         tr
-          td = link_to device.name, device_path(device)
+          td = link_to device.id, device_path(device)
           td = device.serial
           - if current_user.super_admin? && device.user_id?
             td = device.user.email
