@@ -43,7 +43,7 @@ class DevicesController < ApplicationController
   end
 
   def create
-    doorkeeper_authorize! :device unless current_user.super_admin?
+    doorkeeper_authorize! :device unless current_user && current_user.super_admin?
     serial = device_json['serial'].tr('^A-Za-z0-9', '').downcase
     if Device.where("serial = ? AND user_id != ?", serial, current_user.id).count > 0
       Rollbar.info("devices/create forbidden", serial: serial, service: current_service, user: current_user)
