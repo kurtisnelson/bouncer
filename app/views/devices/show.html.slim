@@ -6,7 +6,7 @@ p.lead
   p
     ' Managed by
     = @device.user.email
-  = link_to "Remove User", device_remove_path(@device), method: :put
+  = link_to "Unclaim", device_unclaim_path(@device), method: :put
 
 table.table
   thead
