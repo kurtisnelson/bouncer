@@ -9,7 +9,7 @@ gem 'bootstrap-sass', '~> 3.3.3'
 gem 'coffee-rails'
 gem 'devise', '>= 3.4.1'
 gem 'doorkeeper', '>= 2.1.3'
-gem 'doorkeeper-grants_assertion', git: "https://github.com/MonsieurCode/doorkeeper-grants_assertion.git"
+gem 'doorkeeper-grants_assertion', github: "uniiverse/doorkeeper-grants_assertion"
 gem 'jquery-rails'
 gem 'lograge'
 gem 'pg'

@@ -3,7 +3,7 @@
 :logfile: ./log/sidekiq.log
 :concurrency: 3
 production:
-  concurrency: 3
+  concurrency: 5
 :queues:
   - default
   - rollbar
