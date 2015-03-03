@@ -52,6 +52,15 @@ GEM
     autoprefixer-rails (5.1.7)
       execjs
       json
+    aws-sdk (2.0.28)
+      aws-sdk-resources (= 2.0.28)
+    aws-sdk-core (2.0.28)
+      builder (~> 3.0)
+      jmespath (~> 1.0)
+      multi_json (~> 1.0)
+      multi_xml (~> 0.5)
+    aws-sdk-resources (2.0.28)
+      aws-sdk-core (= 2.0.28)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -129,6 +138,8 @@ GEM
     hitimes (1.2.2)
     i18n (0.7.0)
     ice_nine (0.11.1)
+    jmespath (1.0.2)
+      multi_json (~> 1.0)
     jquery-rails (4.0.3)
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
@@ -341,6 +352,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers (~> 0.9)
   analytics-ruby (~> 2.0.0)
+  aws-sdk
   bootstrap-sass (~> 3.3.3)
   codeclimate-test-reporter
   coffee-rails

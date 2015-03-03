@@ -36,6 +36,7 @@ group :production, :staging do
 end
 
 group :development, :test do
+  gem 'aws-sdk'
   gem 'pry'
   gem 'dotenv-rails'
   gem 'foreman'
