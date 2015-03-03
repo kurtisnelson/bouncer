@@ -19,7 +19,6 @@ gem 'newrelic_rpm'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'parse-ruby-client'
-gem 'rails_12factor', group: :production
 gem 'rollbar'
 gem 'sass-rails', '>= 3.2'
 gem 'sidekiq'
