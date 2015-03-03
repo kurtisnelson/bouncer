@@ -1,0 +1,7 @@
+files:
+  - /var/log/nginx/*.log
+  - /srv/www/*/shared/log/*
+exclude_files:
+  - newrelic_agent
+destination:
+  host: logs2.papertrailapp.com

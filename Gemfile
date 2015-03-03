@@ -31,6 +31,10 @@ gem 'virtus'
 gem 'uglifier', '>= 1.3.0'
 gem 'unicorn'
 
+group :production, :staging do
+  gem 'remote_syslog'
+end
+
 group :development, :test do
   gem 'pry'
   gem 'dotenv-rails'
