@@ -10,8 +10,6 @@ class ApplicationController < ActionController::Base
   rescue_from UnauthenticatedError, with: :unauthenticated
   rescue_from BadRequestError, with: :bad_request
 
-  force_ssl if: :ssl_configured?
-
   def after_sign_in_path_for(resource)
     session["user_return_to"] || root_url
   end
