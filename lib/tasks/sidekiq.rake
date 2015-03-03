@@ -1,4 +1,4 @@
-SIDEKIQ_PID = File.expand_path("../../../tmp/pids/sidekiq.pid", __FILE__)
+SIDEKIQ_PID = File.expand_path("../../tmp/pids/sidekiq.pid", __FILE__)
 
 namespace :sidekiq do
   def sidekiq_is_running?
