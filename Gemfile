@@ -8,7 +8,7 @@ gem 'active_model_serializers', '~> 0.9'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'devise', '~> 3.4.1'
 gem 'doorkeeper'
-gem 'doorkeeper-grants_assertion', github: "uniiverse/doorkeeper-grants_assertion"
+gem 'doorkeeper-grants_assertion', github: "MonsieurCode/doorkeeper-grants_assertion"
 gem 'jquery-rails'
 gem 'lograge'
 gem 'pg'

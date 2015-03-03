@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/uniiverse/doorkeeper-grants_assertion.git
+  remote: git://github.com/MonsieurCode/doorkeeper-grants_assertion.git
   revision: e49dbbaeb88c838d95002ee15beb900e6641d852
   specs:
     doorkeeper-grants_assertion (0.0.1)
