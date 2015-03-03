@@ -24,7 +24,7 @@ describe 'Device requests' do
       post devices_path(format: :json), access_token: access_token.token, devices: {serial: serial}
       expect(response.status).to eq 201
       post devices_path(format: :json), access_token: access_token.token, devices: {serial: serial}
-      expect(response.status).to eq 400
+      expect(response.status).to eq 422
     end
 
     it 'allows a user to claim a device' do

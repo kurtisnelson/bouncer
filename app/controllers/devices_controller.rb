@@ -63,9 +63,10 @@ class DevicesController < ApplicationController
       )
       respond_with @device
     else
+      Rollbar.info("Bad device", device: @device.to_json, error: @device.errors.to_json)
       respond_to do |format|
         format.html { render action: "new" }
-        format.json { head :bad_request }
+        format.json { render json: @device.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -81,7 +82,11 @@ class DevicesController < ApplicationController
 
   def device_json
     if !params['devices'].blank?
-      return params['devices']
+      if params['devices'].is_a? Array
+        return params['devices'][0]
+      else
+        return params['devices']
+      end
     elsif !params['device'].blank?
       return params['device']
     else
