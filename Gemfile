@@ -25,6 +25,7 @@ gem 'sass-rails', '>= 3.2'
 gem 'sidekiq'
 gem 'simple_form'
 gem 'slim-rails'
+gem 'therubyracer'
 gem 'turbolinks'
 gem 'virtus'
 
