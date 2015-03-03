@@ -27,7 +27,4 @@ fi
 git pull --rebase &&
 bundle exec rspec &&
 git push &&
-git push heroku master &&
-heroku run rake db:migrate --app mbouncer &&
-heroku restart --app mbouncer
-curl http://mbouncer.herokuapp.com/ &> /dev/null
+bundle exec rake deploy
