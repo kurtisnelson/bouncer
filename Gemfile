@@ -6,9 +6,9 @@ gem 'rails', '4.2.0'
 gem 'analytics-ruby', '~> 2.0.0', :require => 'segment/analytics'
 gem 'active_model_serializers', '~> 0.9'
 gem 'bootstrap-sass', '~> 3.3.3'
-gem 'devise', '~> 3.4.1'
-gem 'doorkeeper'
-gem 'doorkeeper-grants_assertion', github: "MonsieurCode/doorkeeper-grants_assertion"
+gem 'devise', '>= 3.4.1'
+gem 'doorkeeper', '>= 2.1.3'
+gem 'doorkeeper-grants_assertion', git: "https://github.com/MonsieurCode/doorkeeper-grants_assertion.git"
 gem 'jquery-rails'
 gem 'lograge'
 gem 'pg'
@@ -27,10 +27,9 @@ gem 'simple_form'
 gem 'slim-rails'
 gem 'therubyracer'
 gem 'turbolinks'
-gem 'virtus'
-
 gem 'uglifier', '>= 1.3.0'
 gem 'unicorn'
+gem 'virtus'
 
 group :production, :staging do
   gem 'remote_syslog'
@@ -48,7 +47,7 @@ group :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'faker'
-  gem 'rspec-rails', '~> 3.0.0'
+  gem 'rspec-rails', '~> 3.2.1'
   gem 'simplecov', require: false
   gem 'vcr'
   gem 'web-console', '~> 2.0'
