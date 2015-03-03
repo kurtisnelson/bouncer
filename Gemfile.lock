@@ -343,6 +343,7 @@ DEPENDENCIES
   analytics-ruby (~> 2.0.0)
   bootstrap-sass (~> 3.3.3)
   codeclimate-test-reporter
+  coffee-rails
   database_cleaner
   devise (>= 3.4.1)
   doorkeeper (>= 2.1.3)
