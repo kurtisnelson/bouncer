@@ -9,7 +9,7 @@ namespace :console do
     regions = YAML.load_file('config/opsworks.yml')['staging']
     ip = get_ip(regions)
     path = '/srv/www/bouncer/current'
-    run_interactively("bundle exec rails console --environment=production", ip, path)
+    run_interactively("SEGMENT_KEY='' bundle exec rails console --environment=production", ip, path)
   end
 
   desc "Connecting to production console"
@@ -18,7 +18,7 @@ namespace :console do
     ip = get_ip(regions)
     # Change myapp to your app name
     path = '/srv/www/bouncer/current'
-    run_interactively("bundle exec rails console --environment=production", ip, path)
+    run_interactively("SEGMENT_KEY='' bundle exec rails console --environment=production", ip, path)
   end
 
   def get_ip(regions)
