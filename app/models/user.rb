@@ -3,9 +3,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable, :confirmable,
     :omniauthable, omniauth_providers: [:facebook]
-
+  validates_uniqueness_of :phone, allow_blank: true
   has_many :devices
-
 
   def to_s
     self.email
