@@ -1,4 +1,4 @@
-SIDEKIQ_PID = File.expand_path("../../tmp/pids/sidekiq.pid", __FILE__)
+SIDEKIQ_PID = File.expand_path("../../../tmp/pids/sidekiq.pid", __FILE__)
 
 namespace :sidekiq do
   def sidekiq_is_running?
@@ -17,7 +17,11 @@ namespace :sidekiq do
   desc "Stop sidekiq daemon."
   task :stop do
     if File.exists? SIDEKIQ_PID
-      sh "sidekiqctl stop #{SIDEKIQ_PID}"
+      begin
+      sh "bundle exec sidekiqctl stop #{SIDEKIQ_PID}"
+      rescue
+      File.delete SIDEKIQ_PID
+      end
     end
   end
 
