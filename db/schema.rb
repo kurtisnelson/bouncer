@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150305183301) do
+ActiveRecord::Schema.define(version: 20150305212725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,14 +68,9 @@ ActiveRecord::Schema.define(version: 20150305183301) do
     t.string   "name"
     t.string   "email"
     t.string   "encrypted_password"
-    t.time     "current_sign_in_at"
-    t.time     "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.integer  "sign_in_count"
-    t.time     "remember_created_at"
-    t.time     "confirmed_at"
-    t.time     "confirmation_sent_at"
     t.string   "confirmation_token"
     t.string   "unconfirmed_email"
     t.string   "reset_password_token"
@@ -87,6 +82,11 @@ ActiveRecord::Schema.define(version: 20150305183301) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "reset_password_sent_at"
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.datetime "remember_created_at"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
   end
 
 end
