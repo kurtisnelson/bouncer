@@ -35,6 +35,6 @@ namespace :console do
   end
 
   def run_interactively(command, server, path)
-    exec %Q(ssh kurt@#{server} -t 'cd #{path} && sudo #{command}') if server && path
+    exec %Q(ssh #{server} -t 'cd #{path} && sudo #{command}') if server && path
   end
 end
