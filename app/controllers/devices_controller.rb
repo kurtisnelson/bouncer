@@ -51,6 +51,7 @@ class DevicesController < ApplicationController
         f.html { render action: "new" }
         f.json { head :forbidden }
       end
+      return
     end
     @device = Device.new
     @device.user_id = current_user.id
