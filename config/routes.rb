@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get :me, to: 'me#show'
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks", registrations: "users/registrations" }
 
-  resources :users do
+  resources :users, except: [:create] do
     put :admin
   end
   match 'users/me' => 'users#show', via: :get
