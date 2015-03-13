@@ -10,6 +10,18 @@ class User < ActiveRecord::Base
     self.email
   end
 
+  def phone_verified_at
+    nil
+  end
+
+  def email_verified_at
+    self.confirmed_at
+  end
+
+  def email_verified_at= val
+    self.confirmed_at = val
+  end
+
   # devise expects this
   def assign_attributes(new_attributes, options={})
     self.attributes=(new_attributes)
