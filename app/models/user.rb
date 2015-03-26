@@ -1,25 +1,14 @@
 class User < ActiveRecord::Base
+  include Confirmable
   after_create :async_details
   devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :trackable, :validatable, :confirmable,
+    :recoverable, :rememberable, :trackable, :validatable,
     :omniauthable, omniauth_providers: [:facebook]
   validates_uniqueness_of :phone, allow_blank: true
   has_many :devices
 
   def to_s
     self.email
-  end
-
-  def phone_verified_at
-    nil
-  end
-
-  def email_verified_at
-    self.confirmed_at
-  end
-
-  def email_verified_at= val
-    self.confirmed_at = val
   end
 
   # devise expects this
