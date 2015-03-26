@@ -71,20 +71,6 @@ Devise.setup do |config|
   # Setup a pepper to generate the encrypted password.
   config.pepper = '9d2c413f8000adce4410e1017bbeb6224edb03d1cc99b91e35852c56db0afc34b9236f7cf85ebd489f1fc46c7fd84f44169767310c833e51cf1b195e79fa0856'
 
-  # Defines which key will be used when confirming an account
-  # config.confirmation_keys = [ :email ]
-
-  # ==> Configuration for :rememberable
-  # The time the user will be remembered without asking for credentials again.
-  # config.remember_for = 2.weeks
-
-  # If true, extends the user's remember period when remembered via cookie.
-  # config.extend_remember_period = false
-
-  # Options to be passed to the created cookie. For instance, you can set
-  # secure: true in order to force SSL only cookies.
-  # config.rememberable_options = {}
-
   # ==> Configuration for :validatable
   # Range for password length.
   config.password_length = 8..128
@@ -93,14 +79,6 @@ Devise.setup do |config|
   # one (and only one) @ exists in the given string. This is mainly
   # to give user feedback and not to assert the e-mail validity.
   config.email_regexp = /\A[^@]+@[^@]+\z/
-
-  # ==> Configuration for :timeoutable
-  # The time you want to timeout the user session without activity. After this
-  # time the user will be asked for credentials again. Default is 30 minutes.
-  # config.timeout_in = 30.minutes
-
-  # If true, expires auth token on session timeout.
-  # config.expire_auth_token_on_timeout = false
 
   # ==> Configuration for :lockable
   # Defines which strategy will be used to lock an account.
