@@ -4,6 +4,20 @@ describe 'User Requests' do
   let(:user_token) { FactoryGirl.create(:access_token).token }
   let(:super_admin_token) { FactoryGirl.create(:admin_access_token).token }
 
+  describe 'POST /users' do
+    it 'allows a user to register' do
+      payload = {
+        users: {
+          email: "kurt@example.com",
+          password: "12345678",
+          password_confirmation: "12345678"
+        }
+      }
+      post users_path(format: :json), payload
+      expect(response).to be_success
+    end
+  end
+
   describe 'GET /users' do
     it 'is unauthorized' do
       get users_path(format: :json), access_token: user_token
