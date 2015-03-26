@@ -20,10 +20,7 @@ class DevicesController < ApplicationController
   end
 
   def claim
-    unless current_user && current_user.super_admin?
-      doorkeeper_authorize!
-      raise UnauthorizedError unless doorkeeper_token.scopes.exists? :device
-    end
+    authenticate_device_scope_or_admin!
     @device = Device.find(params["device_id"])
     raise UnauthorizedError if @device.user
     @device.user_id = current_user.id
@@ -47,10 +44,7 @@ class DevicesController < ApplicationController
   end
 
   def create
-    unless current_user && current_user.super_admin?
-      doorkeeper_authorize!
-      raise UnauthorizedError unless doorkeeper_token.scopes.exists? :device
-    end
+    authenticate_device_scope_or_admin!
     serial = device_json['serial'].tr('^A-Za-z0-9', '').downcase
     if Device.where("serial = ? AND user_id != ?", serial, current_user.id).count > 0
       Rollbar.info("devices/create forbidden", serial: serial, service: current_service, user: current_user)
@@ -105,10 +99,4 @@ class DevicesController < ApplicationController
     end
   end
 
-  def authenticate_admin_or_owner! device
-    return if current_user && current_user.super_admin?
-    return if current_user && current_user.id = device.user_id
-    return if current_device && current_device.id = device.id
-    raise UnauthorizedError
-  end
 end
