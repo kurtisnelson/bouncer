@@ -5,6 +5,7 @@ module Confirmable
     before_create :generate_email_confirmation_token
     before_create :generate_phone_confirmation_code
     after_create  :send_confirmation_instructions, if: :send_confirmation_email?
+    after_create  :send_verification_text, if: :send_verification_text?
   end
 
   def confirm!(args={})
@@ -18,6 +19,10 @@ module Confirmable
 
   def send_confirmation_instructions
     Mailer.delay.confirmation self.id
+  end
+
+  def send_verification_text
+    Texter.delay.confirmation self.id
   end
 
   def resend_confirmation_instructions
@@ -69,5 +74,9 @@ module Confirmable
 
   def send_confirmation_email?
     !email_confirmed? && self.email.present?
+  end
+
+  def send_verification_text?
+    !phone_confirmed? && self.phone.present?
   end
 end

@@ -5,28 +5,56 @@ describe 'User Requests' do
   let(:super_admin_token) { FactoryGirl.create(:admin_access_token).token }
 
   describe 'POST /users' do
-    user_payload = {
-      users: {
-        email: "kurt@example.com",
-        password: "12345678",
-        password_confirmation: "12345678"
+    describe 'email signup' do
+      user_payload = {
+        users: {
+          email: "kurt@example.com",
+          password: "12345678",
+          password_confirmation: "12345678"
+        }
       }
-    }
 
-    it 'allows a user to register' do
-      post users_path(format: :json), user_payload
-      expect(response).to be_success
+      it 'allows a user to register' do
+        post users_path(format: :json), user_payload
+        expect(response).to be_success
+      end
+
+      it 'leaves users unconfirmed' do
+        post users_path(format: :json), user_payload
+        user = User.find_by(email: user_payload[:users][:email])
+        expect(user.email_confirmed?).to be false
+      end
+
+      it 'queues a confirmation email' do
+        Sidekiq::Testing.fake!
+        expect{post users_path(format: :json), user_payload}.to change{Sidekiq::Extensions::DelayedClass.jobs.size}.by 1
+      end
     end
 
-    it 'leaves users unconfirmed' do
-      post users_path(format: :json), user_payload
-      user = User.find_by(email: user_payload[:users][:email])
-      expect(user.confirmed?).to be false
-    end
+    describe 'phone signup' do
+      user_payload = {
+        users: {
+          phone: "4048675309",
+          password: "12345678",
+          password_confirmation: "12345678"
+        }
+      }
 
-    it 'queues a confirmation email' do
-      Sidekiq::Testing.fake!
-      expect{post users_path(format: :json), user_payload}.to change{Sidekiq::Extensions::DelayedClass.jobs.size}.by 1
+      it 'allows a user to register' do
+        post users_path(format: :json), user_payload
+        expect(response).to be_success
+      end
+
+      it 'leaves user unconfirmed' do
+        post users_path(format: :json), user_payload
+        user = User.find_by(phone: user_payload[:users][:phone])
+        expect(user.phone_confirmed?).to be false
+      end
+
+      it 'queues a verification text' do
+        Sidekiq::Testing.fake!
+        expect{post users_path(format: :json), user_payload}.to change{Sidekiq::Extensions::DelayedClass.jobs.size}.by 1
+      end
     end
   end
 
