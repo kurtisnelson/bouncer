@@ -4,6 +4,7 @@ class RenameConfirmationOnUser < ActiveRecord::Migration
     rename_column :users, :confirmation_sent_at, :phone_confirmation_sent_at
     rename_column :users, :confirmation_token, :email_confirmation_token
     add_column :users, :phone_verified_at, :datetime
-    remove_column :users, :phone_verified
+    add_column :users, :email_confirmation_sent_at, :datetime
+    remove_column :users, :phone_verified, :boolean
   end
 end

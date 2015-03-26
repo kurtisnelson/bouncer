@@ -23,6 +23,7 @@ RSpec.configure do |config|
     c.hook_into :webmock
     c.ignore_localhost = true
     c.ignore_hosts 'codeclimate.com'
-    c.filter_sensitive_data('PARSE_MASTER_KEY') { ENV['PARSE_MASTER_KEY'] }
+    c.filter_sensitive_data('MANDRILL_KEY') { ENV['MANDRILL_KEY'] }
+    c.filter_sensitive_data('FACEBOOK_SECRET') { ENV['FACEBOOK_SECRET'] }
   end
 end

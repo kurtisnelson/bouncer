@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20150326173512) do
     t.datetime "phone_confirmation_sent_at"
     t.string   "phone_verification_code"
     t.datetime "phone_verified_at"
+    t.datetime "email_confirmation_sent_at"
   end
 
 end

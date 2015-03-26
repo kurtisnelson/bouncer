@@ -4,6 +4,38 @@ HOST: https://bouncer-api.monsieur.co
 # Bouncer
 Bouncer registers users and manages OAuth tokens.
 
+# Group User
+
+## Users Collection [/users]
+
+### Create a user [POST]
+
+Register a new user
+
++ Request (application/json)
+
+   + Body
+
+          {
+            "users": {
+              "email": "kurt@example.com",
+              "password": "12345678",
+              "password_confirmation": "12345678"
+            }
+          }
+
++ Response 200
+
+   + Body
+
+          {
+            "users": {
+              "id": "uuid",
+              "email": "kurt@example.com"
+            }
+          }
+
+
 # Group Token
 
 ## Token resource [/oauth/token]
