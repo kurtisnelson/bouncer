@@ -68,7 +68,7 @@ class User < ActiveRecord::Base
   end
 
   def async_details
-    SyncUserWorker.perform_async(self.id)
+    SyncUserWorker.perform_in(10.seconds, self.id)
   end
 
   def sync_details
