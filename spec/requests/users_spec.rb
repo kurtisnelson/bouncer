@@ -90,6 +90,19 @@ describe 'User Requests' do
     end
   end
 
+  describe 'GET /users/:id/confirm' do
+    let(:user) { FactoryGirl.create(:unconfirmed_user) }
+    it 'confirms the user with the correct code' do
+      get user_confirm_path(user.id, format: :json), confirmation_token: user.email_confirmation_token
+      expect(response).to be_success
+    end
+
+    it 'does not confirm the user with the wrong code' do
+      get user_confirm_path(user.id, format: :json), confirmation_token: SecureRandom.hex
+      expect(response).to_not be_success
+    end
+  end
+
   describe 'POST /users/me' do
     it "fails without a token" do
       post users_me_path(format: :json)

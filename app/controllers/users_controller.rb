@@ -7,6 +7,20 @@ class UsersController < ApplicationController
     respond_with @users
   end
 
+  def confirm
+    @user = User.find(params[:user_id])
+
+    if params[:confirmation_token] == @user.email_confirmation_token
+      @user.confirm_email!
+      head :no_content
+    elsif params[:confirmation_token] == @user.phone_verification_code
+      @user.confirm_phone!
+      head :no_content
+    else
+      head :bad_request
+    end
+  end
+
   def show
     if params[:id] == 'me'
       @user = current_user

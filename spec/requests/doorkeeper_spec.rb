@@ -7,7 +7,7 @@ describe Doorkeeper::TokensController do
       user = User.new
       user.email = Faker::Internet.email
       user.password = password
-      user.confirm!
+      user.confirm_email!
       user.save!
       post oauth_token_path, {grant_type: "password", username: user.email, password: password}
       expect(response.status).to eq 200

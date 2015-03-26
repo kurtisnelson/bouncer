@@ -8,8 +8,13 @@ module Confirmable
     after_create  :send_verification_text, if: :send_verification_text?
   end
 
-  def confirm!(args={})
+  def confirm_email!
     self.email_verified_at = Time.now.utc
+    self.save!
+  end
+
+  def confirm_phone!
+    self.phone_verified_at = Time.now.utc
     self.save!
   end
 

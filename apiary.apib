@@ -35,6 +35,17 @@ Register a new user
             }
           }
 
+## Confirmation [/users/{id}/confirm]
+
+### Confirm phone or email [GET]
+
+Takes in either a phone or an email verification token. If the requester is a mobile browser, it redirects to bouncer://users/id upon success.
+
++ Parameters
+    + confirmation_token = `abcd` (required , string) ... token
+
++ Response 201
++ Response 200
 
 # Group Token
 

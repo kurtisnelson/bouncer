@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   resources :users, except: [:create] do
     put :admin
-    post :confirm
+    get :confirm
   end
   match 'users/me' => 'users#show', via: :get
   match 'users/me' => 'users#update', via: :post
