@@ -29,15 +29,15 @@ class User < ActiveRecord::Base
 
   def self.from_facebook(data, token)
     user = where(facebook_uid: data['id']).first
-    if user == nil
-      user = User.new
-      user.password = Devise.friendly_token[0,20]
-    end
+    user = where(email: data['email']).first unless user
+    user = User.new unless user
+
+    user.password = Devise.friendly_token[0,20] if user.password.blank?
+    user.email = data['email'] unless data['email'].nil?
+    user.email_verified_at = Time.now
+    user.name = data['name'] unless data['name'].nil?
     user.facebook_uid = data['id']
     user.facebook_token = token
-    user.email = data['email']
-    user.name = data['name']
-    user.confirm!
     user.save
     user
   end
@@ -47,12 +47,14 @@ class User < ActiveRecord::Base
     if user == nil
       user = User.new
     end
-    user.email = auth.info.email
     user.password = Devise.friendly_token[0,20] if user.password.blank?
-    user.facebook_uid = auth.uid
-    user.name = auth.info.name
-    user.image = auth.info.image
-    user.confirm!
+    unless user.email
+      user.email = auth.info.email
+      user.email_verified_at = Time.now
+    end
+    user.facebook_uid = auth.uid unless user.facebook_uid
+    user.name = auth.info.name unless user.name
+    user.image = auth.info.image unless user.image
     user.save
     user
   end
