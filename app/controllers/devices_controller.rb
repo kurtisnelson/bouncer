@@ -20,6 +20,10 @@ class DevicesController < ApplicationController
   end
 
   def claim
+    unless current_user && current_user.super_admin?
+      doorkeeper_authorize!
+      raise UnauthorizedError unless doorkeeper_token.scopes.exists? :device
+    end
     @device = Device.find(params["device_id"])
     raise UnauthorizedError if @device.user
     @device.user_id = current_user.id
@@ -43,7 +47,10 @@ class DevicesController < ApplicationController
   end
 
   def create
-    doorkeeper_authorize! :device unless current_user && current_user.super_admin?
+    unless current_user && current_user.super_admin?
+      doorkeeper_authorize!
+      raise UnauthorizedError unless doorkeeper_token.scopes.exists? :device
+    end
     serial = device_json['serial'].tr('^A-Za-z0-9', '').downcase
     if Device.where("serial = ? AND user_id != ?", serial, current_user.id).count > 0
       Rollbar.info("devices/create forbidden", serial: serial, service: current_service, user: current_user)
@@ -62,7 +69,10 @@ class DevicesController < ApplicationController
         event: 'Created device',
         properties: { serial: serial }
       )
-      respond_with @device
+      respond_to do |format|
+        format.html { respond_with @device }
+        format.json { render json: @device }
+      end
     else
       Rollbar.info("Bad device", device: @device.to_json, error: @device.errors.to_json)
       respond_to do |format|
