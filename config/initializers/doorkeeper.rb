@@ -5,7 +5,16 @@ Doorkeeper.configure do
   end
 
   resource_owner_from_credentials do |routes|
-    u = User.find_for_database_authentication(:email => params[:username])
+    email = params[:email] if params[:email].present?
+    email = params[:username] if params[:username].present?
+    phone = params[:phone] if params[:phone].present?
+    if email
+      u = User.find_for_database_authentication(email: email)
+    elsif phone
+      u = User.find_for_database_authentication(phone: phone)
+    else
+      raise BadRequestException
+    end
     u if u && u.valid_password?(params[:password])
   end
 
@@ -23,7 +32,7 @@ Doorkeeper.configure do
   grant_flows %w(assertion authorization_code client_credentials password)
 
   default_scopes :user
-  optional_scopes :device
+  
 
   access_token_expires_in 2.hours
 

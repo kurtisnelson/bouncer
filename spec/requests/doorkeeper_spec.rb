@@ -8,10 +8,20 @@ describe Doorkeeper::TokensController do
       user.email = Faker::Internet.email
       user.password = password
       user.confirm_email!
-      user.save!
-      post oauth_token_path, {grant_type: "password", username: user.email, password: password}
+      post oauth_token_path, {grant_type: "password", email: user.email, password: password}
       expect(response.status).to eq 200
     end
+
+    it 'accepts a phone and password' do
+      password = SecureRandom.hex
+      user = User.new
+      user.phone = Faker::PhoneNumber.cell_phone
+      user.password = password
+      user.confirm_phone!
+      post oauth_token_path, {grant_type: "password", phone: user.phone, password: password}
+      expect(response.status).to eq 200 
+    end
+
     it 'accepts an assertion grant' do
       VCR.use_cassette 'facebook/token' do
         post oauth_token_path, {"grant_type"=>"assertion", "assertion"=>"valid"}
