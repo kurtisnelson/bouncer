@@ -19,7 +19,7 @@ describe Doorkeeper::TokensController do
       user.password = password
       user.confirm_phone!
       post oauth_token_path, {grant_type: "password", phone: user.phone, password: password}
-      expect(response.status).to eq 200 
+      expect(response.status).to eq 200
     end
 
     it 'accepts an assertion grant' do

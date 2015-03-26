@@ -2,7 +2,7 @@ Rails.application.configure do
   host = 'http://localhost'
   port = ENV['PORT']
   config.action_mailer.default_url_options = { host: host, port: port }
-  Rails.application.routes.default_url_options[:host] = host
+  Rails.application.routes.default_url_options[:host] = host.to_s + ":" + port.to_s
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped
