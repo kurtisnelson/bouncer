@@ -46,21 +46,21 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    addressable (2.3.7)
+    addressable (2.3.8)
     analytics-ruby (2.0.12)
     arel (6.0.0)
     autoprefixer-rails (5.1.8)
       execjs
       json
-    aws-sdk (2.0.32)
-      aws-sdk-resources (= 2.0.32)
-    aws-sdk-core (2.0.32)
+    aws-sdk (2.0.33)
+      aws-sdk-resources (= 2.0.33)
+    aws-sdk-core (2.0.33)
       builder (~> 3.0)
       jmespath (~> 1.0)
       multi_json (~> 1.0)
       multi_xml (~> 0.5)
-    aws-sdk-resources (2.0.32)
-      aws-sdk-core (= 2.0.32)
+    aws-sdk-resources (2.0.33)
+      aws-sdk-core (= 2.0.33)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -102,7 +102,7 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
     docile (1.1.5)
-    doorkeeper (2.1.3)
+    doorkeeper (2.1.4)
       railties (>= 3.2)
     dotenv (2.0.0)
     dotenv-rails (2.0.0)
@@ -113,7 +113,7 @@ GEM
     eventmachine (1.0.7)
     eventmachine-tail (0.6.4)
       eventmachine
-    excon (0.44.4)
+    excon (0.45.1)
     execjs (2.4.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -218,6 +218,8 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.2)
       loofah (~> 2.0)
+    railsworks (0.0.1)
+      aws-sdk (~> 2.0.33)
     railties (4.2.1)
       actionpack (= 4.2.1)
       activesupport (= 4.2.1)
@@ -374,6 +376,7 @@ DEPENDENCIES
   pry
   rack-cors
   rails (= 4.2.1)
+  railsworks
   remote_syslog
   rollbar
   rspec-rails (~> 3.2.1)
