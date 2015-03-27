@@ -27,4 +27,4 @@ fi
 git pull --rebase &&
 bundle exec rspec &&
 git push &&
-bundle exec rake deploy
+bundle exec rake deploy:production
