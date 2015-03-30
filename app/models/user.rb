@@ -21,8 +21,8 @@ class User < ActiveRecord::Base
 
   def self.from_facebook(data, token)
     user = where(facebook_uid: data['id']).first
-    user = where(email: data['email']).first unless user
-    user = User.new unless user
+    user = where(email: data['email']).first if user.nil? && data['email']
+    user = User.new if user.nil?
 
     user.password = Devise.friendly_token[0,20] if user.password.blank?
     user.email = data['email'] unless data['email'].nil?
