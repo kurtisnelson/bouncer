@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    if params[:id] == 'me'
+    if params[:id] == 'me' && current_user
       @user = current_user
     elsif current_service == 'cashier' || (current_user && current_user.super_admin?)
       @user = User.find(params[:id])

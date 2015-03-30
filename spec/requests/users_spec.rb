@@ -103,6 +103,19 @@ describe 'User Requests' do
     end
   end
 
+  describe 'GET /users/me' do
+    it 'rejects when not authorized' do
+      get user_path('me', format: :json)
+      expect(response.status).to eq 403
+    end
+
+    context 'user' do
+      it 'shows info' do
+        get user_path('me', format: :json), access_token: user_token
+        expect(response).to be_success
+      end
+    end
+  end
   describe 'POST /users/me' do
     it "fails without a token" do
       post users_me_path(format: :json)
