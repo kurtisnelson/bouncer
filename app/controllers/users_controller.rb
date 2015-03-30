@@ -39,14 +39,24 @@ class UsersController < ApplicationController
 
   def update
     authenticate!
-    if params[:id]
-      head :forbidden
-      return
-    else
+    if params[:id] == current_user.id || current_user.super_admin?
+      user = User.find(params[:id])
+    elsif params[:id] == 'me' || params[:id].nil?
       user = current_user
+    else
+      raise UnauthorizedError
     end
+
     raise BadRequestError if params['user'].blank?
-    user.phone = params["user"]["phone"] if params["user"]["phone"]
+    if params["user"]["phone"]
+      user.phone = params["user"]["phone"]
+      user.phone_verified_at = nil if user.phone_changed?
+    end
+
+    if params["user"]["email"]
+      user.email = params["user"]["email"]
+      user.email_verified_at = nil if user.email_changed?
+    end
     user.name = params["user"]["name"] if params["user"]["name"]
     if user.save
       respond_with user

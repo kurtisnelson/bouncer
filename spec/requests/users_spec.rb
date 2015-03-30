@@ -123,30 +123,39 @@ describe 'User Requests' do
       end
     end
   end
-  describe 'POST /users/me' do
+
+  describe 'PATCH /users/:id' do
     it "fails without a token" do
-      post users_me_path(format: :json)
+      patch user_path(user.id, format: :json)
       expect(response.status).to eq 401
     end
 
-    context 'valid token for user' do
-      let!(:application) { FactoryGirl.create :application } # OAuth application
-      let!(:user)        { FactoryGirl.create :user }
-      let!(:access_token)       { FactoryGirl.create(:access_token, :application => application, :resource_owner_id => user.id) }
-
-      it 'allows phone number to be updated' do
+    context 'user' do
+      it 'allows phone number to be updated but clears validity' do
         number = "1234567890"
-        post users_me_path(format: :json), access_token: access_token.token, user: {phone: number}
+        patch user_path(user.id, format: :json), access_token: user_token, user: {phone: number}
         expect(response).to be_success
         user.reload
         expect(user.phone).to eq number
+        expect(user).to_not be_phone_confirmed
       end
 
-      it 'fails gracefully with bad params' do
-        post users_me_path(format: :json), access_token: access_token.token, usersss: {}
-        expect(response.status).to eq 400
+      it 'allows email to be updated but clears validity' do
+        email = "bob@example.com"
+        patch user_path(user.id, format: :json), access_token: user_token, user: {email: email}
+        expect(response).to be_success
+        user.reload
+        expect(user.email).to eq email
+        expect(user).to_not be_email_confirmed
+      end
+    end
+
+    context 'me' do
+      it 'allows phone number to be updated' do
+        number = "1234567890"
+        patch user_path('me', format: :json), access_token: user_token, user: {phone: number}
+        expect(response).to be_success
       end
     end
   end
-
 end
