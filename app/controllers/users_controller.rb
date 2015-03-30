@@ -22,15 +22,19 @@ class UsersController < ApplicationController
   end
 
   def show
+    authenticate!
     if params[:id] == 'me' && current_user
       @user = current_user
-    elsif current_service == 'cashier' || (current_user && current_user.super_admin?)
+    else
       @user = User.find(params[:id])
+    end
+
+    if current_service == 'cashier' || (current_user && current_user.super_admin?) || @user.id == current_user.id
+      respond_with @user
     else
       Rollbar.info("users/show denied", id: params[:id], service: current_service, user: current_user)
       raise UnauthorizedError
     end
-    respond_with @user
   end
 
   def update

@@ -1,8 +1,10 @@
 require 'request_helper'
 
 describe 'User Requests' do
-  let(:user_token) { FactoryGirl.create(:access_token).token }
-  let(:super_admin_token) { FactoryGirl.create(:admin_access_token).token }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:user_token) { FactoryGirl.create(:access_token, resource_owner_id: user.id).token }
+  let(:admin) { FactoryGirl.create(:admin) }
+  let(:super_admin_token) { FactoryGirl.create(:admin_access_token, resource_owner_id: admin.id).token }
 
   describe 'POST /users' do
     describe 'email signup' do
@@ -82,9 +84,14 @@ describe 'User Requests' do
     end
 
     context 'user' do
-      it 'rejects' do
-        user = FactoryGirl.create(:user)
+      it 'allows myself' do
         get user_path(user.id, format: :json), access_token: user_token
+        expect(response.status).to eq 200
+      end
+
+      it 'rejects others' do
+        other_user = FactoryGirl.create(:user)
+        get user_path(other_user.id, format: :json), access_token: user_token
         expect(response.status).to eq 403
       end
     end
@@ -104,9 +111,9 @@ describe 'User Requests' do
   end
 
   describe 'GET /users/me' do
-    it 'rejects when not authorized' do
+    it 'rejects when not authenticated' do
       get user_path('me', format: :json)
-      expect(response.status).to eq 403
+      expect(response.status).to eq 401
     end
 
     context 'user' do
