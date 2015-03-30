@@ -218,7 +218,7 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.2)
       loofah (~> 2.0)
-    railsworks (0.0.1)
+    railsworks (0.0.2)
       aws-sdk (~> 2.0.33)
     railties (4.2.1)
       actionpack (= 4.2.1)
