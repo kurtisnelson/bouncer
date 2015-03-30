@@ -1,11 +1,10 @@
 class DeviseMailer < Devise::Mailer
-  include Devise::Controllers::UrlHelpers
 
   def reset_password_instructions(record, token, opts={})
-    Emailer.password_reset(record, token)
+    Mailer.delay.password_reset record.id
   end
 
   def unlock_instructions(record, token, opts={})
-    Emailer.unlock record, token
+    Mailer.delay.unlock record.id
   end
 end

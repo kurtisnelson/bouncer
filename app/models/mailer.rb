@@ -7,19 +7,24 @@ class Mailer
     Mailer.new.confirmation user
   end
 
+  def self.password_reset user_id
+    user = User.find(user_id)
+    Mailer.new.password_reset user
+  end
+
   def confirmation user
     url = url_helpers.user_confirm_url(user, confirmation_token: user.email_confirmation_token)
     message = build_message(user.email, "CONFIRM_LINK", url)
     send_mandrill_template "confirmation", message
   end
 
-  def password_reset user, token
-    message = build_message(record.email, "PASSWORD_RESET_LINK", edit_password_url(record, reset_password_token: token))
+  def password_reset user
+    message = build_message(record.email, "PASSWORD_RESET_LINK", edit_password_url(record, reset_password_token: user.reset_password_token))
     send_mandrill_template "reset-password", message
   end
 
-  def unlock user, token
-    message = build_message(record.email, "UNLOCK_LINK", unlock_url(record, unlock_token: token))
+  def unlock user
+    message = build_message(record.email, "UNLOCK_LINK", unlock_url(record, unlock_token: user.email_confirmation_token))
     send_mandrill_template "unlock", message
   end
   private
