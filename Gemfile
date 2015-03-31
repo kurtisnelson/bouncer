@@ -13,7 +13,7 @@ gem 'doorkeeper-grants_assertion', github: "uniiverse/doorkeeper-grants_assertio
 gem 'jquery-rails'
 gem 'lograge'
 gem 'pg'
-gem 'rack-cors'
+gem 'rack-cors', require: "rack/cors"
 gem 'sinatra', require: nil
 gem 'mandrill-api'
 gem 'newrelic_rpm'
