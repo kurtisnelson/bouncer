@@ -10,10 +10,10 @@ class UsersController < ApplicationController
   def confirm
     @user = User.find(params[:user_id])
 
-    if params[:confirmation_token] == @user.email_confirmation_token
+    if params[:confirmation_token] && params[:confirmation_token] == @user.email_confirmation_token
       @user.confirm_email!
       head :no_content
-    elsif params[:confirmation_token] == @user.phone_verification_code
+    elsif params[:confirmation_token] && params[:confirmation_token] == @user.phone_verification_code
       @user.confirm_phone!
       head :no_content
     elsif request.request_method == 'PUT' # resend confirmations
