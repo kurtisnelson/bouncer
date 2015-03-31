@@ -5,11 +5,13 @@ class Mailer
   def self.confirmation user_id
     user = User.find(user_id)
     Mailer.new.confirmation user
+    logger.info "Queued user confirm email"
   end
 
   def self.password_reset user_id
     user = User.find(user_id)
     Mailer.new.password_reset user
+    logger.info "Queued password reset email"
   end
 
   def confirmation user
