@@ -136,6 +136,7 @@ describe 'User Requests' do
     end
 
     it 'enqueues messages' do
+      user
       expect{put user_confirm_path(user.id, format: :json), access_token: user_token}.to change{Sidekiq::Extensions::DelayedClass.jobs.size}.by 2
     end
   end

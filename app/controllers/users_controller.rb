@@ -16,14 +16,11 @@ class UsersController < ApplicationController
     elsif params[:confirmation_token] && params[:confirmation_token] == @user.phone_verification_code
       @user.confirm_phone!
       head :no_content
-    elsif request.request_method == 'PUT' # resend confirmations
-      authenticate_user!
-      @user = User.find(params[:user_id])
-      raise UnauthorizedError unless current_user.super_admin? || @user.id == current_user.id
-      @user.reset_confirmation
-      head :no_content
     else
-      head :bad_request
+      authenticate_user!
+      raise UnauthorizedError unless current_user.super_admin? || @user.id == current_user.id
+      @user.reset_confirmation!
+      head :no_content
     end
   end
 
