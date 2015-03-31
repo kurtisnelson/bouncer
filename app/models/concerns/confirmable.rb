@@ -38,12 +38,6 @@ module Confirmable
     send_verification_text if send_verification_text?
   end
 
-  def resend_confirmation_instructions
-    pending_any_confirmation do
-      send_confirmation_instructions
-    end
-  end
-
   def email_confirmed?
     email_verified_at != nil
   end
@@ -52,24 +46,7 @@ module Confirmable
     phone_verified_at != nil
   end
 
-  def active_for_authentication?
-    super && confirmed?
-  end
-
-  def inactive_message
-    !confirmed? ? :unconfirmed : super
-  end
-
   protected
-
-  def pending_any_confirmation
-    if !email_confirmed? || !phone_confirmed?
-      yield
-    else
-      self.errors.add(:email, :already_confirmed)
-      false
-    end
-  end
 
   def generate_email_confirmation_token
     self.email_confirmation_token   = SecureRandom.hex 16

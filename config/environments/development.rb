@@ -2,6 +2,7 @@ Rails.application.configure do
   host = 'http://localhost'
   port = ENV['PORT']
   config.action_mailer.default_url_options = { host: host, port: port }
+  Rails.application.routes.default_url_options[:host] = host
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
