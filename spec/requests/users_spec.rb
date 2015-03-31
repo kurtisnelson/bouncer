@@ -99,6 +99,7 @@ describe 'User Requests' do
 
   describe 'GET /users/:id/confirm' do
     let(:user) { FactoryGirl.create(:unconfirmed_user) }
+
     it 'confirms the user with the correct code' do
       get user_confirm_path(user.id, format: :json), confirmation_token: user.email_confirmation_token
       expect(response).to be_success
@@ -107,6 +108,35 @@ describe 'User Requests' do
     it 'does not confirm the user with the wrong code' do
       get user_confirm_path(user.id, format: :json), confirmation_token: SecureRandom.hex
       expect(response).to_not be_success
+    end
+  end
+
+  describe 'PUT /users/:id/confirm' do
+    let(:user) { FactoryGirl.create(:unconfirmed_user) }
+    let(:user_token) { FactoryGirl.create(:access_token, resource_owner_id: user.id).token }
+
+    it 'denies unauthenticated requests' do
+      put user_confirm_path(user.id, format: :json)
+      expect(response.status).to eq 401
+    end
+
+    it 'denies resending another user' do
+      put user_confirm_path(admin.id, format: :json), access_token: user_token
+      expect(response.status).to eq 403
+    end
+
+    it 'resets email token' do
+      expect{put user_confirm_path(user.id, format: :json), access_token: user_token; user.reload}.to change(user, :email_confirmation_token)
+      expect(response).to be_success
+    end
+
+    it 'resets phone token' do
+      expect{put user_confirm_path(user.id, format: :json), access_token: user_token; user.reload}.to change(user, :phone_verification_code)
+      expect(response).to be_success
+    end
+
+    it 'enqueues messages' do
+      expect{put user_confirm_path(user.id, format: :json), access_token: user_token}.to change{Sidekiq::Extensions::DelayedClass.jobs.size}.by 2
     end
   end
 

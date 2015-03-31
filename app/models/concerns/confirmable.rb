@@ -30,6 +30,14 @@ module Confirmable
     Texter.delay.confirmation self.id
   end
 
+  def reset_confirmation
+    generate_email_confirmation_token unless email_confirmed?
+    generate_phone_confirmation_code unless phone_confirmed?
+    self.save
+    #send_confirmation_instructions if send_confirmation_email?
+    #send_verification_text if send_verification_text?
+  end
+
   def resend_confirmation_instructions
     pending_any_confirmation do
       send_confirmation_instructions
@@ -71,10 +79,6 @@ module Confirmable
   def generate_phone_confirmation_code
     self.phone_verification_code = SecureRandom.hex 2
     self.phone_confirmation_sent_at = Time.now.utc
-  end
-
-  def generate_confirmation_token!
-    generate_confirmation_token && save(validate: false)
   end
 
   def send_confirmation_email?
