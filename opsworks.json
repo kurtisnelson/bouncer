@@ -1,0 +1,42 @@
+{
+        "deploy": {
+                "bouncer": {
+                        "application": "bouncer",
+                        "application_type": "rails",
+                        "rails_env": "production",
+                        "scm": {
+                                "scm_type": "git",
+                                "repository": "."
+                        }
+                }
+        },
+        "opsworks": {
+                "layers": {
+                        "rails-app": {
+                                "name": "Rails App Server",
+                                "instances": {
+                                        "rails-app1": {"private-ip": "10.10.10.10"}
+                                }
+                        }
+                }
+        },
+        "opsworks_custom_cookbooks": {
+                "enabled": true,
+                "scm": {
+                        "type": "git",
+                        "repository": "https://github.com/MonsieurCode/cookbooks.git"
+                },
+                "recipes": [
+                        "recipe[opsworks_initial_setup]",
+                        "recipe[ssh_host_keys]",
+                        "recipe[ssh_users]",
+                        "recipe[mysql::client]",
+                        "recipe[dependencies]",
+                        "recipe[unicorn::rails]",
+                        "recipe[deploy::default]",
+                        "recipe[deploy::rails]",
+                        "recipe[agent_version]",
+                        "recipe[rails::configure]"
+                                                                                                                                                                                                                                                                                                                                                    ]
+        }
+}
