@@ -49,7 +49,6 @@ class UsersController < ApplicationController
     else
       raise UnauthorizedError
     end
-
     if user_params["phone"]
       user.phone = user_params["phone"]
       user.phone_verified_at = nil if user.phone_changed?
@@ -82,8 +81,8 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    return params['user'] if params['user']
-    return params['users'] if params['users']
+    return params['user'] if params['user'].present?
+    return params['users'] if params['users'].present?
     raise BadRequestError
   end
 end
