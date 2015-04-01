@@ -50,17 +50,16 @@ class UsersController < ApplicationController
       raise UnauthorizedError
     end
 
-    raise BadRequestError if params['user'].blank?
-    if params["user"]["phone"]
+    if user_params["phone"]
       user.phone = params["user"]["phone"]
       user.phone_verified_at = nil if user.phone_changed?
     end
 
-    if params["user"]["email"]
-      user.email = params["user"]["email"]
+    if user_params["email"]
+      user.email = user_params["email"]
       user.email_verified_at = nil if user.email_changed?
     end
-    user.name = params["user"]["name"] if params["user"]["name"]
+    user.name = user_params["name"] if user_params["name"]
     if user.save
       respond_with user
     else
@@ -78,5 +77,13 @@ class UsersController < ApplicationController
       flash[:error] = "Could not grant admin"
     end
     respond_with @user
+  end
+
+  private
+
+  def user_params
+    return params['user'] if params['user']
+    return params['users'] if params['users']
+    raise BadRequestError
   end
 end

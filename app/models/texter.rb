@@ -6,6 +6,5 @@ class Texter
   end
 
   def confirmation user
-    logger.warn "unimplemented"
   end
 end
