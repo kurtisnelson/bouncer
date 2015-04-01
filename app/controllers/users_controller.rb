@@ -51,7 +51,7 @@ class UsersController < ApplicationController
     end
 
     if user_params["phone"]
-      user.phone = params["user"]["phone"]
+      user.phone = user_params["phone"]
       user.phone_verified_at = nil if user.phone_changed?
     end
 

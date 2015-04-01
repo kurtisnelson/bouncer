@@ -164,7 +164,7 @@ describe 'User Requests' do
     context 'user' do
       it 'allows phone number to be updated but clears validity' do
         number = "1234567890"
-        patch user_path(user.id, format: :json), access_token: user_token, user: {phone: number}
+        patch user_path(user.id, format: :json), access_token: user_token, users: {phone: number}
         expect(response).to be_success
         user.reload
         expect(user.phone).to eq number
@@ -173,7 +173,7 @@ describe 'User Requests' do
 
       it 'allows email to be updated but clears validity' do
         email = "bob@example.com"
-        patch user_path(user.id, format: :json), access_token: user_token, user: {email: email}
+        patch user_path(user.id, format: :json), access_token: user_token, users: {email: email}
         expect(response).to be_success
         user.reload
         expect(user.email).to eq email
@@ -184,7 +184,7 @@ describe 'User Requests' do
     context 'me' do
       it 'allows phone number to be updated' do
         number = "1234567890"
-        patch user_path('me', format: :json), access_token: user_token, user: {phone: number}
+        patch user_path('me', format: :json), access_token: user_token, users: {phone: number}
         expect(response).to be_success
       end
     end
