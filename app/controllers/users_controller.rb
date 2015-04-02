@@ -32,7 +32,9 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     end
 
-    if current_service == 'cashier' || (current_user && current_user.super_admin?) || @user.id == current_user.id
+    if current_service == 'cashier' || current_service == 'barback'
+      respond_with @user
+    elsif current_user && (current_user.super_admin? || @user.id == current_user.id)
       respond_with @user
     else
       Rollbar.info("users/show denied", id: params[:id], service: current_service, user: current_user)
