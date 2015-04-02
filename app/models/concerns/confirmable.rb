@@ -6,6 +6,12 @@ module Confirmable
     before_create :generate_phone_confirmation_code
     after_create  :send_confirmation_instructions, if: :send_confirmation_email?
     after_create  :send_verification_text, if: :send_verification_text?
+    before_update  :check_validity
+  end
+
+  def check_validity
+    self.email_verified_at = nil if self.email_changed?
+    self.phone_verified_at = nil if self.phone_changed?
   end
 
   def confirm_email!

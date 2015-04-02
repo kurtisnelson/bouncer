@@ -32,12 +32,9 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     end
 
-    if current_service == 'cashier' || current_service == 'barback'
-      respond_with @user
-    elsif current_user && (current_user.super_admin? || @user.id == current_user.id)
+    if can_show @user
       respond_with @user
     else
-      Rollbar.info("users/show denied", id: params[:id], service: current_service, user: current_user)
       raise UnauthorizedError
     end
   end
@@ -51,15 +48,8 @@ class UsersController < ApplicationController
     else
       raise UnauthorizedError
     end
-    if user_params["phone"]
-      user.phone = user_params["phone"]
-      user.phone_verified_at = nil if user.phone_changed?
-    end
-
-    if user_params["email"]
-      user.email = user_params["email"]
-      user.email_verified_at = nil if user.email_changed?
-    end
+    user.phone = user_params['phone'] if user_params["phone"]
+    user.email = user_params['email'] if user_params["email"]
     user.name = user_params["name"] if user_params["name"]
     if user.save
       respond_with user
@@ -81,6 +71,13 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def can_show user
+    return true if current_service == 'cashier' || current_service == 'barback'
+    return true if current_user && current_user.super_admin?
+    return true if current_user && user.id == current_user.id
+    false
+  end
 
   def user_params
     return params['user'] if params['user'].present?
