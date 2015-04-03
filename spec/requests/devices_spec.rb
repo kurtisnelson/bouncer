@@ -81,7 +81,16 @@ describe 'Device requests' do
     it 'allows removing the device user' do
       device = FactoryGirl.create(:device, user: FactoryGirl.create(:user))
       put device_unclaim_path(device.id, format: :json), access_token: access_token.token
-      expect(response.status).to eq 204
+      expect(response.status).to eq 200
+    end
+
+    it 'creates token when a device is claimed' do
+      device = FactoryGirl.create(:device)
+      put device_claim_path(device, format: :json), access_token: access_token.token
+      expect(response).to be_success
+      token_id = json['devices'][0]['links']['device_token'].to_i
+      expect(token_id).to_not be nil
+      expect(json['linked']['device_tokens'][0]['id']).to eq token_id
     end
   end
 

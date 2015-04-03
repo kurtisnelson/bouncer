@@ -22,6 +22,16 @@ describe Doorkeeper::TokensController do
       expect(response.status).to eq 200
     end
 
+    it 'accepts device scope' do
+      password = SecureRandom.hex
+      user = User.new
+      user.email = Faker::Internet.email
+      user.password = password
+      user.confirm_email!
+      post oauth_token_path, {grant_type: "password", email: user.email, password: password, scope: "device"}
+      expect(response.status).to eq 200
+    end
+
     it 'accepts an assertion grant' do
       VCR.use_cassette 'facebook/token' do
         post oauth_token_path, {"grant_type"=>"assertion", "assertion"=>"valid"}
