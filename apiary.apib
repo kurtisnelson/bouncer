@@ -126,6 +126,16 @@ Mark a device as managed by the current user token.
 
 + Response 200
 
+Claim succeeded
+
++ Response 403
+
+Forbidden, device doesn't exist or is claimed by other user
+
++ Response 400
+
+Current user already has claim
+
 ## Device Unclaim [/device/{id}/unclaim]
 
 Unmark a device as managed.
@@ -133,6 +143,44 @@ Unmark a device as managed.
 ### Unclaim a device [PUT]
 
 + Response 200
+
+## Devices Claim [/devices/claim]
+
++ Parameters
+    + serial (required , string) ... Serial of device
+
+Mark a device as managed by the current user token.
+
+### Claim a device [PUT]
+
++ Response 200
+
+Claim succeeded
+
++ Response 403
+
+Forbidden, device doesn't exist or is claimed by other user
+
++ Response 400
+
+Current user already has claim
+
+## Devices Unclaim
+
++ Parameters
+    + serial (require , string) ... Serial of device
+
+Mark a device as no longer in service to current user
+
+### Unclaim a device [PUT]
+
++ Response 200
+
+Unclaim succeeded
+
++ Response 403
+
+Current user does not own claim
 
 ## Devices Collection [/devices]
 

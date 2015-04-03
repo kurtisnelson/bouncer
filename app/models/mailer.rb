@@ -19,14 +19,10 @@ class Mailer
   end
 
   def password_reset user
-    message = build_message(record.email, "PASSWORD_RESET_LINK", edit_password_url(record, reset_password_token: user.reset_password_token))
+    message = build_message(user.email, "PASSWORD_RESET_LINK", url_helpers.user_reset_url(user, reset_password_token: user.reset_password_token))
     send_mandrill_template "reset-password", message
   end
 
-  def unlock user
-    message = build_message(record.email, "UNLOCK_LINK", unlock_url(record, unlock_token: user.email_confirmation_token))
-    send_mandrill_template "unlock", message
-  end
   private
 
   def send_mandrill_template name, message

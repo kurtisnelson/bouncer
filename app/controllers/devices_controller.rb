@@ -21,8 +21,9 @@ class DevicesController < ApplicationController
 
   def claim
     authenticate_device_scope_or_admin!
-    @device = Device.find(params["device_id"])
-    raise UnauthorizedError if @device.user
+    device_from params
+    raise BadRequestError if @device.user_id == current_user.id
+    raise UnauthorizedError if @device.user_id
     @device.user_id = current_user.id
     if @device.save
       render json: @device
@@ -32,7 +33,7 @@ class DevicesController < ApplicationController
   end
 
   def unclaim
-    @device = Device.find(params["device_id"])
+    device_from params
     authenticate_admin_or_owner! @device
     @device.user_id = nil
     @device.device_tokens.destroy_all
@@ -74,6 +75,14 @@ class DevicesController < ApplicationController
   end
 
   private
+
+  def device_from params
+    if params["device_id"]
+      @device = Device.find(params["device_id"])
+    else params['serial']
+      @device = Device.find_by(serial: params['serial'])
+    end
+  end
 
   def device_json
     if !params['devices'].blank?

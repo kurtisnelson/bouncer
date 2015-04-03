@@ -10,6 +10,13 @@ Rails.application.routes.draw do
     put :admin
     put :confirm
     get :confirm
+    scope module: 'users' do
+      get :reset, to: 'passwords#show'
+      patch :reset, to: 'passwords#update'
+      collection do
+        post :reset, to: 'passwords#index'
+      end
+    end
   end
   match 'users/me' => 'users#show', via: :get
   match 'users/me' => 'users#update', via: :patch
@@ -17,5 +24,10 @@ Rails.application.routes.draw do
   resources :devices, except: [:destroy, :update, :edit] do
     put :claim
     put :unclaim
+    collection do
+      put :claim
+      put :unclaim
+    end
   end
+
 end
