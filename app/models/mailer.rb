@@ -19,7 +19,7 @@ class Mailer
   end
 
   def password_reset user
-    message = build_message(user.email, "PASSWORD_RESET_LINK", url_helpers.edit_user_password_url(user, reset_password_token: user.reset_password_token))
+    message = build_message(user.email, "PASSWORD_RESET_LINK", url_helpers.user_reset_url(user, reset_password_token: user.reset_password_token))
     send_mandrill_template "reset-password", message
   end
 

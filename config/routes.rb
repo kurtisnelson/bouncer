@@ -4,12 +4,19 @@ Rails.application.routes.draw do
   end
   root 'page#index'
   get :me, to: 'me#show'
-  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks", registrations: "users/registrations", passwords: "users/passwords" }
+  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks", registrations: "users/registrations" }
 
   resources :users, except: [:create] do
     put :admin
     put :confirm
     get :confirm
+    scope module: 'users' do
+      get :reset, to: 'passwords#show'
+      patch :reset, to: 'passwords#update'
+      collection do
+        post :reset, to: 'passwords#index'
+      end
+    end
   end
   match 'users/me' => 'users#show', via: :get
   match 'users/me' => 'users#update', via: :patch
@@ -22,4 +29,5 @@ Rails.application.routes.draw do
       put :unclaim
     end
   end
+
 end

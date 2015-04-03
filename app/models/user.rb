@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   include Confirmable
   after_create :async_details
   devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :trackable,
+    :rememberable, :trackable,
     :omniauthable, omniauth_providers: [:facebook]
   validates_uniqueness_of :phone, allow_blank: true
   validates_uniqueness_of :email, allow_blank: true
