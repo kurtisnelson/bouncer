@@ -17,5 +17,9 @@ Rails.application.routes.draw do
   resources :devices, except: [:destroy, :update, :edit] do
     put :claim
     put :unclaim
+    collection do
+      put :claim
+      put :unclaim
+    end
   end
 end
