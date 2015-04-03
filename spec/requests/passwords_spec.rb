@@ -8,5 +8,7 @@ describe 'Password requests' do
     user.confirm_email!
     expect(Mailer).to receive(:password_reset).with(user.id)
     post user_password_path, email: email
+    expect{user.reload}.to change(user, :reset_password_token)
+    expect(response).to be_success
   end
 end
