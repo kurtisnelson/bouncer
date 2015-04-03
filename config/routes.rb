@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   end
   root 'page#index'
   get :me, to: 'me#show'
-  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks", registrations: "users/registrations" }
+  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks", registrations: "users/registrations", passwords: "users/passwords" }
 
   resources :users, except: [:create] do
     put :admin
