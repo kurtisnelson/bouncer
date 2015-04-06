@@ -3,13 +3,13 @@ class Users::PasswordsController < ApplicationController
 
   def index
     @user = User.find_by(email: params[:email])
-    @user.reset_password_token = SecureRandom.hex 12
-    if @user.save
+    ## we actually expose a timing attack vuln here, if the user doesn't exist this request will be faster
+    if @user
+      @user.reset_password_token = SecureRandom.hex 12
+      @user.save
       Mailer.password_reset @user.id
-      head :no_content
-    else
-      head :bad_request
     end
+    head :no_content
   end
 
   def update
