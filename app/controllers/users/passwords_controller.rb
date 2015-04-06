@@ -37,8 +37,13 @@ class Users::PasswordsController < ApplicationController
   private
 
   def user_params
-    raise BadRequestError unless params[:users]
-    params[:users]
+    if !params[:user].blank?
+      params[:user]
+    elsif !params[:users].blank?
+      params[:users]
+    else
+      raise BadRequestError
+    end
   end
 
   def require_token
