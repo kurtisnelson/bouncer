@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     get :confirm
     scope module: 'users' do
       get :reset, to: 'passwords#show'
-      patch :reset, to: 'passwords#update'
+      post :reset, to: 'passwords#update'
       collection do
         post :reset, to: 'passwords#index'
       end

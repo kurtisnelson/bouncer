@@ -1,6 +1,6 @@
 <h2>Change your password</h2>
 
-<%= simple_form_for(@user, url: user_reset_path(@user, reset_password_token: @token), html: { method: :put }) do |f| %>
+<%= simple_form_for(@user, url: user_reset_path(@user, reset_password_token: @token), html: { method: :post }) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">

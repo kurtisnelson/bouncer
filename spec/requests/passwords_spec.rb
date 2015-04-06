@@ -22,7 +22,7 @@ describe 'Password requests' do
   it 'allows reset' do
     token = SecureRandom.hex
     user = FactoryGirl.create(:user, reset_password_token: token)
-    patch user_reset_path(user, reset_password_token: token), users: {password: "junk", password_confirmation: "junk"}
+    post user_reset_path(user, reset_password_token: token), users: {password: "junk", password_confirmation: "junk"}
     expect(response.status).to eq 200
     user.reload
     expect(user.valid_password? "junk").to be true
