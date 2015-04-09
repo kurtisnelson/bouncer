@@ -30,7 +30,6 @@ gem 'therubyracer'
 gem 'turbolinks'
 gem 'uglifier', '>= 1.3.0'
 gem 'unicorn'
-gem 'virtus'
 
 group :production, :staging do
   gem 'remote_syslog'
