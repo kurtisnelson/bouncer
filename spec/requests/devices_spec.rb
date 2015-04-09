@@ -26,8 +26,26 @@ describe 'Device requests' do
       expect(json['devices'][0]['links']['user']).to eq access_token.resource_owner_id
     end
 
+    it 'allows a user to unclaim a device' do
+      device = FactoryGirl.create(:device)
+      put device_claim_path(device, format: :json), access_token: access_token.token
+      put device_unclaim_path(device, format: :json), access_token: access_token.token
+      expect(response).to be_success
+    end
+
     it 'creates token when a device is claimed' do
       device = FactoryGirl.create(:device)
+      put device_claim_path(device, format: :json), access_token: access_token.token
+      expect(response).to be_success
+      token_id = json['devices'][0]['links']['device_token'].to_i
+      expect(token_id).to_not be nil
+      expect(json['linked']['device_tokens'][0]['id']).to eq token_id
+    end
+
+    it 'has a token after claim -> unclaim -> claim' do
+      device = FactoryGirl.create(:device)
+      put device_claim_path(device, format: :json), access_token: access_token.token
+      put device_unclaim_path(device, format: :json), access_token: access_token.token
       put device_claim_path(device, format: :json), access_token: access_token.token
       expect(response).to be_success
       token_id = json['devices'][0]['links']['device_token'].to_i
