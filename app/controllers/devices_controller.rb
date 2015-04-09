@@ -25,6 +25,7 @@ class DevicesController < ApplicationController
     raise BadRequestError if @device.user_id == current_user.id
     raise UnauthorizedError if @device.user_id
     @device.user_id = current_user.id
+    @device.issue_token
     if @device.save
       render json: @device
     else
@@ -38,7 +39,7 @@ class DevicesController < ApplicationController
     @device.user_id = nil
     @device.device_tokens.destroy_all
     if @device.save
-      render json: @device
+      head :no_content
     else
       render json: {errors: @device.errors}, status: :unprocessable_entity
     end

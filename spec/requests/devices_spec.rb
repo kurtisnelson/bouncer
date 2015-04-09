@@ -12,14 +12,6 @@ describe 'Device requests' do
       expect(json['devices'][0]['links']['user']).to eq access_token.resource_owner_id
     end
 
-    it 'assigns a token to a new device' do
-      post devices_path(format: :json), access_token: access_token.token, devices: {serial: serial}
-      expect(response).to be_success
-      expect(json['linked']['device_tokens'][0]).to_not be_empty
-      expect(json['linked']['device_tokens'][0]['access_token']).to_not be_empty
-      expect(json['linked']['device_tokens'][0]['refresh_token']).to_not be_empty
-    end
-
     it 'does not allow a duplicate device to be created' do
       post devices_path(format: :json), access_token: access_token.token, devices: {serial: serial}
       expect(response).to be_success
@@ -81,7 +73,7 @@ describe 'Device requests' do
     it 'allows removing the device user' do
       device = FactoryGirl.create(:device, user: FactoryGirl.create(:user))
       put device_unclaim_path(device.id, format: :json), access_token: access_token.token
-      expect(response.status).to eq 200
+      expect(response.status).to eq 204
     end
 
     it 'creates token when a device is claimed' do
