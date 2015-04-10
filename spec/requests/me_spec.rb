@@ -16,13 +16,13 @@ describe MeController do
       end
     end
 
-    context "device token" do
-      let!(:access_token) { FactoryGirl.create(:device_token) }
+    context "activation token" do
+      let!(:access_token) { FactoryGirl.create(:activation_token) }
 
       it "succeeds with a valid token" do
         get me_path(format: :json), access_token: access_token.token
         expect(response).to be_success
-        expect(json['devices']).to_not be nil
+        expect(json['activations']).to_not be nil
       end
     end
   end

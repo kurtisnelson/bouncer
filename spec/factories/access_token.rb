@@ -15,10 +15,9 @@ FactoryGirl.define do
     end
   end
 
-  factory :device_token, class: Doorkeeper::DeviceToken do
-    resource_owner_id { create(:device).id }
+  factory :activation_token, class: Doorkeeper::ActivationToken do
+    resource_owner_id { create(:activation).id }
     application
-    expires_in 2.hours
-    scopes "device"
+    expires_in 2.weeks
   end
 end

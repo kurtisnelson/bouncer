@@ -54,10 +54,10 @@ class ApplicationController < ActionController::Base
     raise UnauthorizedError unless doorkeeper_token.scopes.exists? :device
   end
 
-  def authenticate_admin_or_owner! device
+  def authenticate_admin_or_owner! activation
     return if current_user && current_user.super_admin?
-    return if current_user && current_user.id = device.user_id
-    return if current_device && current_device.id = device.id
+    return if current_user && current_user.id = activation.user_id
+    return if current_activation.id == activation.id
     raise UnauthorizedError
   end
 
@@ -71,9 +71,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def current_device
+  def current_activation
     if doorkeeper_token && doorkeeper_token.accessible?
-      Device.find_by(id: doorkeeper_token.resource_owner_id)
+      Activation.find_by(id: doorkeeper_token.resource_owner_id)
     else
       nil
     end

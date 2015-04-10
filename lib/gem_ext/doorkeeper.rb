@@ -1,1 +1,1 @@
-require 'gem_ext/doorkeeper/device_token'
+require 'gem_ext/doorkeeper/activation_token'

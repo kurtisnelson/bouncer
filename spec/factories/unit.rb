@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :device do
+  factory :unit do
     serial { SecureRandom.hex }
   end
 end
