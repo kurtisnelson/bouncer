@@ -52,6 +52,7 @@ class ApplicationController < ActionController::Base
     return if current_user && current_user.super_admin?
     doorkeeper_authorize!
     raise UnauthorizedError unless doorkeeper_token.scopes.exists? :device
+    raise UnauthorizedError unless current_user
   end
 
   def authenticate_admin_or_owner! activation
