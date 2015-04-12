@@ -56,7 +56,8 @@ class ActivationsController < ApplicationController
     if params['activations']["unit"]
       @unit = Unit.find(params['activations']["unit"])
     else params['activations']['serial']
-      @unit = Unit.find_by(serial: params['activations']['serial'])
+      @unit = Unit.find_or_create_by(serial: params['activations']['serial'])
     end
+    @unit
   end
 end
