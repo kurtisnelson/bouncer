@@ -10,7 +10,7 @@ namespace :sidekiq do
     if sidekiq_is_running?
       puts "Sidekiq is already running."
     else
-      sh "bundle exec sidekiq -d" # -d means daemon
+      sh "bundle exec sidekiq -d | logger -t sidekiq" # -d means daemon
     end
   end
 
