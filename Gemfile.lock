@@ -49,7 +49,7 @@ GEM
     addressable (2.3.8)
     analytics-ruby (2.0.12)
     arel (6.0.0)
-    autoprefixer-rails (5.1.8.1)
+    autoprefixer-rails (5.1.9)
       execjs
       json
     aws-sdk (2.0.38)
@@ -79,6 +79,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1.1)
+    concise_logging (1.0.0)
+      rails (~> 4.1)
     connection_pool (2.2.0)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
@@ -135,10 +137,6 @@ GEM
     jwt (1.4.1)
     kgio (2.9.3)
     libv8 (3.16.14.7)
-    lograge (0.3.1)
-      actionpack (>= 3)
-      activesupport (>= 3)
-      railties (>= 3)
     loofah (2.0.1)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -149,7 +147,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.4.3)
     mini_portile (0.6.2)
-    minitest (5.5.1)
+    minitest (5.6.0)
     multi_json (1.11.0)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -182,7 +180,7 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     rack (1.6.0)
-    rack-cors (0.3.1)
+    rack-cors (0.4.0)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -284,7 +282,7 @@ GEM
       railties (>= 3.1, < 5.0)
       slim (~> 3.0)
     slop (3.6.0)
-    sprockets (3.0.0)
+    sprockets (3.0.1)
       rack (~> 1.0)
     sprockets-rails (2.2.4)
       actionpack (>= 3.0)
@@ -337,6 +335,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.3)
   codeclimate-test-reporter
   coffee-rails
+  concise_logging
   database_cleaner
   devise (>= 3.4.1)
   doorkeeper (>= 2.1.3)
@@ -346,7 +345,6 @@ DEPENDENCIES
   faker
   foreman
   jquery-rails
-  lograge
   mandrill-api
   newrelic_rpm
   omniauth

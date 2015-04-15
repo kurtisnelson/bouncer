@@ -23,4 +23,6 @@ Rails.application.routes.draw do
 
   resources :activations
   resources :units
+
+  match '*path', via: :all, to: 'pages#error_404'
 end

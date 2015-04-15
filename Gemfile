@@ -7,11 +7,11 @@ gem 'analytics-ruby', '~> 2.0.0', :require => 'segment/analytics'
 gem 'active_model_serializers', '~> 0.9'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'coffee-rails'
+gem 'concise_logging'
 gem 'devise', '>= 3.4.1'
 gem 'doorkeeper', '>= 2.1.3'
 gem 'doorkeeper-grants_assertion', github: "uniiverse/doorkeeper-grants_assertion"
 gem 'jquery-rails'
-gem 'lograge'
 gem 'pg'
 gem 'rack-cors', require: "rack/cors"
 gem 'sinatra', require: nil
