@@ -8,7 +8,7 @@ if [[ -n $(git status --porcelain) ]]; then
   esac
 fi
 
-if [[ -n $(ack "binding.pry" --ignore-dir=bin) ]]; then
+if [[ -n $(ack "binding.pry" --ignore-dir={bin,vendor}) ]]; then
   read -p "You have a \`binding.pry\` still in your code - make baby pandas cry? (y/N) " yn
   case $yn in
     [Yy]* ) :;;

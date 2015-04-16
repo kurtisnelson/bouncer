@@ -1,2 +1,2 @@
 #!/bin/sh
-ack '( |\t)$' --ignore-dir={spec/cassettes,public,db,log,coverage}
+ack '( |\t)$' --ignore-dir={spec/cassettes,public,db,log,coverage,vendor}
