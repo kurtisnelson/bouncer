@@ -52,14 +52,14 @@ GEM
     autoprefixer-rails (5.1.9)
       execjs
       json
-    aws-sdk (2.0.38)
-      aws-sdk-resources (= 2.0.38)
-    aws-sdk-core (2.0.38)
+    aws-sdk (2.0.39)
+      aws-sdk-resources (= 2.0.39)
+    aws-sdk-core (2.0.39)
       builder (~> 3.0)
       jmespath (~> 1.0)
       multi_json (~> 1.0)
-    aws-sdk-resources (2.0.38)
-      aws-sdk-core (= 2.0.38)
+    aws-sdk-resources (2.0.39)
+      aws-sdk-core (= 2.0.39)
     bcrypt (3.1.10)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -105,7 +105,7 @@ GEM
     eventmachine (1.0.7)
     eventmachine-tail (0.6.4)
       eventmachine
-    excon (0.45.1)
+    excon (0.45.2)
     execjs (2.5.2)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
