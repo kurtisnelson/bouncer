@@ -2,7 +2,7 @@ class UnitsController < ApplicationController
   before_action :authenticate!
 
   def index
-    @units = Unit.all
+    @units = Unit.page(page).per(params[:per_page])
     render json: @units
   end
 
