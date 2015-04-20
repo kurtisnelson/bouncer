@@ -4,11 +4,11 @@ class ActivationsController < ApplicationController
 
   def index
     if current_user && current_user.super_admin?
-      @activations = Activation.all
+      @activations = Activation.page(page).per(params[:per_page])
     elsif current_activation
       @activations = [current_activation]
     else
-      @activations = Activation.where(user_id: current_user.id)
+      @activations = Activation.where(user_id: current_user.id).page(page).per(params[:per_page])
     end
     render json: @activations
   end

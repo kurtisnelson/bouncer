@@ -48,6 +48,10 @@ class ApplicationController < ActionController::Base
     Rails.env.production?
   end
 
+  def page
+    (params[:page] || 1).to_i
+  end
+
   def authenticate_device_scope_or_admin!
     return if current_user && current_user.super_admin?
     doorkeeper_authorize!

@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def index
     authenticate_admin!
-    @users = User.all
+    @users = User.page(page).per(params[:per_page])
     respond_with @users
   end
 
