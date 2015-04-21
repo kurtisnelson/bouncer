@@ -325,7 +325,6 @@ DEPENDENCIES
   aws-sdk
   bootstrap-sass (~> 3.3.3)
   codeclimate-test-reporter
-  coffee-rails
   concise_logging
   database_cleaner
   devise (>= 3.4.1)
