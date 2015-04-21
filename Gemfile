@@ -17,7 +17,6 @@ gem 'pg'
 gem 'rack-cors', require: "rack/cors"
 gem 'sinatra', require: nil
 gem 'mandrill-api'
-gem 'newrelic_rpm'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'parse-ruby-client'
