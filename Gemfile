@@ -19,7 +19,6 @@ gem 'sinatra', require: nil
 gem 'mandrill-api'
 gem 'omniauth'
 gem 'omniauth-facebook'
-gem 'parse-ruby-client'
 gem 'railsworks'
 gem 'rollbar'
 gem 'sass-rails', '>= 3.2'
@@ -49,10 +48,9 @@ group :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'faker'
-  gem 'rspec-rails', '~> 3.2.1'
+  gem 'rspec-rails', '~> 3.2'
   gem 'simplecov', require: false
   gem 'vcr'
-  gem 'web-console', '~> 2.0'
   gem 'webmock'
   gem "codeclimate-test-reporter", require: nil
 end

@@ -21,7 +21,7 @@ class ActivationsController < ApplicationController
     @activation.user_id = current_user.id
     if @activation.save
       @activation.issue_token
-      render json: @activation
+      render_json_api @activation
       Analytics.track(
         user_id: current_user.id,
         event: 'Activated unit',
