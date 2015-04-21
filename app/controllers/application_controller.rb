@@ -52,6 +52,14 @@ class ApplicationController < ActionController::Base
     (params[:page] || 1).to_i
   end
 
+  def render_json_api obj
+    if obj.respond_to? :total_pages
+      render json: obj, content_type: "application/vnd.api+json", meta: {total_pages: obj.total_pages}
+    else
+      render json: obj, content_type: "application/vnd.api+json"
+    end
+  end
+
   def authenticate_device_scope_or_admin!
     return if current_user && current_user.super_admin?
     doorkeeper_authorize!

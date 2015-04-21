@@ -10,7 +10,7 @@ class ActivationsController < ApplicationController
     else
       @activations = Activation.where(user_id: current_user.id).page(page).per(params[:per_page])
     end
-    render json: @activations
+    render_json_api @activations
   end
 
   def create
@@ -47,7 +47,7 @@ class ActivationsController < ApplicationController
     @activation = Activation.find(params[:id])
     @token = @activation.token
     authenticate_admin_or_owner! @activation
-    render json: @activation
+    render_json_api @activation
   end
 
   private
