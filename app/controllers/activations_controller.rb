@@ -1,8 +1,6 @@
 class ActivationsController < ApplicationController
-  before_action :authenticate!
-  respond_to :json
-
   def index
+    authenticate!
     if current_user && current_user.super_admin?
       @activations = Activation.page(page).per(params[:per_page])
     elsif current_activation
