@@ -18,7 +18,11 @@ namespace :papertrail do
   desc "Stop papertrail remote_syslog daemon."
   task :stop do
     if File.exists? PAPERTRAIL_PID
-      sh "kill `cat #{PAPERTRAIL_PID}`"
+      begin
+        sh "kill `cat #{PAPERTRAIL_PID}`"
+      rescue
+        puts "Cleaning up after dead papertrail"
+      end
       rm_f PAPERTRAIL_PID
     end
   end
