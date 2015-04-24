@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate_admin!
     authenticate_user!
-    unless current_user.super_admin?
+    unless current_user && current_user.super_admin?
       raise UnauthorizedError
     end
   end
