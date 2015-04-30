@@ -41,10 +41,10 @@ class UsersController < ApplicationController
 
   def update
     authenticate!
-    if params[:id] == current_user.id || current_user.super_admin?
-      user = User.find(params[:id])
-    elsif params[:id] == 'me' || params[:id].nil?
+    if params[:id] == 'me' || params[:id].nil?
       user = current_user
+    elsif params[:id] == current_user.id || current_user.super_admin?
+      user = User.find(params[:id])
     else
       raise UnauthorizedError
     end
