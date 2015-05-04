@@ -4,7 +4,7 @@ class DeviseMailer < Devise::Mailer
     Mailer.delay.password_reset record.id
   end
 
-  def unlock_instructions(record, token, opts={})
-    Mailer.delay.unlock record.id
+  def unlock_instructions(record, url, opts={})
+    Mailer.delay.unlock record.id, url
   end
 end
