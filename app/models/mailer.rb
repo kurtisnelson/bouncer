@@ -13,16 +13,14 @@ class Mailer
   end
 
   def confirmation user, uri
-    new_query_ar = URI.decode_www_form(uri.query || '') << ["confirmation_token", user.email_confirmation_token]
-    uri.query = URI.encode_www_form(new_query_ar)
-    message = build_message(user.email, "CONFIRM_LINK", uri.to_s)
+    url = uri.to_s + "?confirmation_token="+user.email_confirmation_token.to_s
+    message = build_message(user.email, "CONFIRM_LINK", url)
     send_mandrill_template "confirmation", message
   end
 
   def password_reset user, uri
-    new_query_ar = URI.decode_www_form(uri.query || '') << ["reset_password_token", user.reset_password_token]
-    uri.query = URI.encode_www_form(new_query_ar)
-    message = build_message(user.email, "PASSWORD_RESET_LINK", uri.to_s)
+    url = uri.to_s + "?reset_password_token=" + user.reset_password_token.to_s
+    message = build_message(user.email, "PASSWORD_RESET_LINK", url)
     send_mandrill_template "reset-password", message
   end
 

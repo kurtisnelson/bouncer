@@ -6,7 +6,7 @@ describe 'Password requests' do
     user.email = email
     user.password = SecureRandom.hex
     user.confirm_email!
-    expect(Mailer).to receive(:password_reset).with(user.id)
+    expect(Mailer).to receive(:password_reset).with(user.id, URI.parse(ENV['PASSWORD_RESET_URL']))
     post reset_users_path, email: email
     expect{user.reload}.to change(user, :reset_password_token)
     expect(response).to be_success

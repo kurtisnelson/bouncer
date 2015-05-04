@@ -4,10 +4,19 @@ class Users::PasswordsController < ApplicationController
   def index
     @user = User.find_by(email: params[:email])
     ## we actually expose a timing attack vuln here, if the user doesn't exist this request will be faster
+    uri = ENV['PASSWORD_RESET_URL']
+    uri = params[:url] if params[:url]
+    begin
+      uri = URI.parse uri
+    rescue URI::InvalidURIError
+      raise BadRequestError
+    end
     if @user
       @user.reset_password_token = SecureRandom.hex 12
       @user.save
-      Mailer.password_reset @user.id
+      Mailer.password_reset @user.id, uri
+    else
+      logger.warn "User does not exist, will not reset"
     end
     head :no_content
   end
