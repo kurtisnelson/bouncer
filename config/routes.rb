@@ -11,7 +11,6 @@ Rails.application.routes.draw do
     put :confirm
     get :confirm
     scope module: 'users' do
-      get :reset, to: 'passwords#show'
       post :reset, to: 'passwords#update'
       collection do
         post :reset, to: 'passwords#index'

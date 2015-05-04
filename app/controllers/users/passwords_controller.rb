@@ -34,12 +34,6 @@ class Users::PasswordsController < ApplicationController
     end
   end
 
-  def show
-    @user = User.find(params[:user_id])
-    @token = params[:reset_password_token]
-    raise UnauthorizedError unless @user.reset_password_token == @token
-  end
-
   private
 
   def user_params
