@@ -54,19 +54,21 @@ Request a reset of a user's password
 
 ## Reset Password [/users/{id}/reset]
 
-Reset a user's password
+### Reset a user's password [POST]
+
+Resets the user's password
 
 + Request (application/json)
 
     + Body
 
-          {
-             "reset_password_token": "token",
-             "users": {
-                "password": "1234",
-                "password_confirmation": "1234"
-             }
-          }
+            {
+                "reset_password_token": "token",
+                "users": {
+                    "password": "1234",
+                    "password_confirmation": "1234"
+                }
+            }
 
 + Response 204
 
