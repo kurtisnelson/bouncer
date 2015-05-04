@@ -21,8 +21,8 @@ Rails.application.routes.draw do
   match 'users/me' => 'users#show', via: :get
   match 'users/me' => 'users#update', via: :patch
 
-  resources :activations
-  resources :units
+  resources :activations, only: [:index, :create, :destroy, :show]
+  resources :units, only: [:index, :create, :show]
 
   match '*path', via: :all, to: 'pages#error_404'
 end
