@@ -35,11 +35,11 @@ Register a new user
             }
           }
 
-## Reset Password [/users/reset]
+## Forgot Password [/users/reset]
 
-### Reset Password [POST]
+### Forgot Password [POST]
 
-Reset a user's password
+Request a reset of a user's password
 
 + Request (application/json)
 
@@ -67,6 +67,24 @@ Takes in either a phone or an email verification token. If the requester is a mo
 ### Resend phone and/or email confirmation [PUT]
 
 Resets any pending confirmation tokens and re-sends notifications
+
+## Reset Password [/users/{id}/reset]
+
+Reset a user's password
+
++ Request (application/json)
+
+      + Body
+
+          {
+             "reset_password_token": "token",
+             "users": {
+                "password": "1234",
+                "password_confirmation": "1234"
+             }
+          }
+
++ Response 204
 
 # Group Token
 
