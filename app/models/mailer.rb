@@ -13,13 +13,13 @@ class Mailer
   end
 
   def confirmation user, uri
-    url = uri.to_s + "?confirmation_token="+user.email_confirmation_token.to_s
+    url = uri.to_s + "?user_id=#{user.id}&confirmation_token=#{user.email_confirmation_token.to_s}"
     message = build_message(user.email, "CONFIRM_LINK", url)
     send_mandrill_template "confirmation", message
   end
 
   def password_reset user, uri
-    url = uri.to_s + "?reset_password_token=" + user.reset_password_token.to_s
+    url = uri.to_s + "?user_id=#{user.id}&reset_password_token=#{user.reset_password_token.to_s}"
     message = build_message(user.email, "PASSWORD_RESET_LINK", url)
     send_mandrill_template "reset-password", message
   end
