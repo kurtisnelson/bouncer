@@ -16,24 +16,24 @@ Register a new user
 
    + Body
 
-          {
-            "users": {
-              "email": "kurt@example.com",
-              "password": "12345678",
-              "password_confirmation": "12345678"
+            {
+                "users": {
+                    "email": "kurt@example.com",
+                    "password": "12345678",
+                    "password_confirmation": "12345678"
+                }
             }
-          }
 
 + Response 200
 
    + Body
 
-          {
-            "users": {
-              "id": "uuid",
-              "email": "kurt@example.com"
+            {
+                "users": {
+                    "id": "uuid",
+                    "email": "kurt@example.com"
+                }
             }
-          }
 
 ## Forgot Password [/users/reset]
 
@@ -45,28 +45,12 @@ Request a reset of a user's password
 
     + Body
 
-          {
-             "email": "kurt@example.com",
-             "url": "optional URL to link to in email"
-          }
+            {
+                "email": "kurt@example.com",
+                "url": "optional URL to link to in email"
+            }
 
 + Response 204
-
-## Confirmation [/users/{id}/confirm]
-
-### Confirm phone or email [GET]
-
-Takes in either a phone or an email verification token. If the requester is a mobile browser, it redirects to bouncer://users/id upon success.
-
-+ Parameters
-    + confirmation_token = `abcd` (required , string) ... token
-
-+ Response 201
-+ Response 200
-
-### Resend phone and/or email confirmation [PUT]
-
-Resets any pending confirmation tokens and re-sends notifications
 
 ## Reset Password [/users/{id}/reset]
 
@@ -74,7 +58,7 @@ Reset a user's password
 
 + Request (application/json)
 
-      + Body
+    + Body
 
           {
              "reset_password_token": "token",
@@ -83,6 +67,28 @@ Reset a user's password
                 "password_confirmation": "1234"
              }
           }
+
++ Response 204
+
+## Confirmation [/users/{id}/confirm]
+
+### Confirm phone or email [PUT]
+
+Takes in either a phone or an email verification token.
+
++ Request (application/json)
+
+    + Body
+        
+            {
+                "confirmation_token": "token"
+            }
+
++ Response 204
+
+### Resend phone and/or email confirmation [GET]
+
+Resets any pending confirmation tokens and re-sends notifications
 
 + Response 204
 
@@ -126,100 +132,123 @@ Scope is an optional field, `user` and `device` are valid. Password is the most 
                 "created_at": 1423841405
             }
 
-# Group Device
+# Group Activation
 
-## Device [/device/{id}]
+## Activation [/activation/{id}]
 
 + Parameters
-    + id (string) ... UUID of the device
+    + id (string) ... UUID of the activation
+    
++ Model (application/json)
 
-+ Model (application/vnd.api+json)
+    + Body
+    
+            {
+                "activations": [
+                    {
+                        "id": "69235f86-c296-4298-b21d-eb4c890ac89a",
+                        "updated_at": "2015-04-29T19:40:23.045Z",
+                        "created_at": "2015-04-29T19:40:23.045Z",
+                        "links": {
+                            "unit": "7156fce9-64ed-4c3a-896e-1d08d5347330",
+                            "device": "ef661caf-80a5-49b0-98cd-5fe9778d5a8e",
+                            "user": "06bb9da1-5585-4ee6-b9c0-2831b1d8db95",
+                            "activation_token": "2840"
+                        }
+                    },
+                ],
+                "linked": {
+                    "activation_tokens": [
+                    {
+                        "id": 2840,
+                        "token": "yourtoken",
+                        "expires_in_seconds": 0,
+                        "refresh_token": "refreshtoken"
+                    }
+                    ]
+                }
+            }
+
+### Retrieve an Activation [GET]
+
++ Response 200
+
+    [Unit][]
+    
+### Deactivation [DELETE]
+
++ Response 204
+    
+## Collection [/activations]
+
+### List Activations [GET]
+
++ Response 200
+
+    [Unit][]
+    
+### Activate unit [POST]
+
+Activates a serial number or Unit ID as a specific device. Returns tokens. Either serial or unit must be specified.
+
++ Request (application/json)
+
+    + Headers
+
+            Accepts: application/json
+            Authorization: Bearer 3391f99c344af714903d69db38acf0f9a90383b4b251c6e9b84a580f53362e4f
+
+    + Body
+    
+            {
+                "activations": {
+                    "device": "deviceUUID",
+                    "serial": "serial"
+                }
+            }
+            
++ Response 200
+
+    [Activation][]
+    
++ Response 403
++ Response 400
+
+# Group Unit
+
+## Unit [/unit/{id}]
+
++ Parameters
+    + id (string) ... UUID of the unit
+
++ Model (application/json)
 
     + Body
 
-                {"devices": [
+                {"units": [
                     {
                         "id":"01b6beb7-41f0-40f3-86ee-233a1d8b000e",
-                        "serial": "0000-000000-0000,
-                        "links": {
-                            "user":"e4569f9a-f2b8-4875-a093-e87a329fbb15",
-                        }
+                        "serial": "0000-000000-0000",
+                        "updated_at": "time",
+                        "created_at": "time"
                     }
                 ]}
 
-### Retrieve a Device [GET]
+### Retrieve a Unit [GET]
 
 + Response 200
 
-    [Device][]
+    [Unit][]
 
-## Device Claim [/device/{id}/claim]
+## Units Collection [/units]
 
-Mark a device as managed by the current user token.
-
-### Claim a device [PUT]
+### List Units [GET]
 
 + Response 200
 
-Claim succeeded
+    [Unit][]
 
-+ Response 403
-
-Forbidden, device doesn't exist or is claimed by other user
-
-+ Response 400
-
-Current user already has claim
-
-## Device Unclaim [/device/{id}/unclaim]
-
-Unmark a device as managed.
-
-### Unclaim a device [PUT]
-
-+ Response 200
-
-## Devices Claim [/devices/claim]
-
-+ Parameters
-    + serial (required , string) ... Serial of device
-
-Mark a device as managed by the current user token.
-
-### Claim a device [PUT]
-
-+ Response 200
-
-Claim succeeded
-
-+ Response 403
-
-Forbidden, device doesn't exist or is claimed by other user
-
-+ Response 400
-
-Current user already has claim
-
-## Devices Unclaim
-
-+ Parameters
-    + serial (require , string) ... Serial of device
-
-Mark a device as no longer in service to current user
-
-### Unclaim a device [PUT]
-
-+ Response 200
-
-Unclaim succeeded
-
-+ Response 403
-
-Current user does not own claim
-
-## Devices Collection [/devices]
-
-### Create device [POST]
+### Create Unit [POST]
 
 + Request (application/json)
 
@@ -231,7 +260,7 @@ Current user does not own claim
     + Body
 
             {
-                "devices": [
+                "units": [
                     {
                         "serial": "unique serial"
                     }
@@ -240,29 +269,7 @@ Current user does not own claim
 
 + Response 200
 
-    + Body
-
-            {
-                "devices": [{
-                    "id": "da6e4208-5509-475b-addb-6e0128d63279",
-                    "serial": "uniquestuff",
-                    "created_at": "2015-02-13T16:07:08.127Z",
-                    "links": {
-                        "user": "ed2aab70-d231-492b-b6a8-b27f2ed51769",
-                        "device_token": 3
-                    }
-                }],
-                "linked": {
-                    "device_tokens": [
-                        {
-                            "resource_owner_id": "da6e4208-5509-475b-addb-6e0128d63279",
-                            "refresh_token": "23f4b88f72faf54e3b1f5a189cc6d4d035f9abf0bde17a7f8a77ccae2ed92619",
-                            "expires_in_seconds": 86400,
-                            "access_token": "4929a92b064252a4dae902bbef23284d4b564af1592eb208beb67cada4826b10"
-                        }
-                    ]
-                }
-            }
+    [Unit][]
 
 + Response 403
 + Response 400
