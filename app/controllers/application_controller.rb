@@ -64,7 +64,7 @@ class ApplicationController < ActionController::API
   def authenticate_admin_or_owner! activation
     return if current_user && current_user.super_admin?
     return if current_user && current_user.id = activation.user_id
-    return if current_activation.id == activation.id
+    return if current_activation && current_activation.id == activation.id
     raise UnauthorizedError
   end
 
