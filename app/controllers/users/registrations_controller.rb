@@ -8,7 +8,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user.password_confirmation = user_params['password_confirmation']
 
     @user.save
-    respond_with @user
+    render_json_api @user
   end
 
   private

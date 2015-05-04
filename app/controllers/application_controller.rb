@@ -1,6 +1,5 @@
-class ApplicationController < ActionController::Base
-  protect_from_forgery with: :null_session
-  skip_before_filter :verify_authenticity_token, :if => Proc.new { |c| c.request.format == 'application/json' }
+class ApplicationController < ActionController::API
+  include ActionController::Serialization
 
   UnauthenticatedError     = Class.new(ActionController::ActionControllerError)
   BadRequestError          = Class.new(ActionController::ActionControllerError)
@@ -42,10 +41,6 @@ class ApplicationController < ActionController::Base
     unless current_user && current_user.super_admin?
       raise UnauthorizedError
     end
-  end
-
-  def ssl_configured?
-    Rails.env.production?
   end
 
   def page

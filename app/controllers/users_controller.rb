@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
-  respond_to :html, :json
+  respond_to :json
 
   def index
     authenticate_admin!
     @users = User.page(page).per(params[:per_page])
-    respond_with @users
+    render_json_api @users
   end
 
   def confirm
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     end
 
     if can_show @user
-      respond_with @user
+      render_json_api @user
     else
       raise UnauthorizedError
     end
@@ -52,7 +52,7 @@ class UsersController < ApplicationController
     user.email = user_params['email'] if user_params["email"]
     user.name = user_params["name"] if user_params["name"]
     if user.save
-      respond_with user
+      render_json_api user
     else
       render json: {errors: user.errors}, status: :unprocessable_entity
     end
@@ -67,7 +67,7 @@ class UsersController < ApplicationController
     else
       flash[:error] = "Could not grant admin"
     end
-    respond_with @user
+    render_json_api @user
   end
 
   private

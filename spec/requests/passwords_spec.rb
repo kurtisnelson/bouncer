@@ -12,18 +12,11 @@ describe 'Password requests' do
     expect(response).to be_success
   end
 
-  it 'shows reset form' do
-    token = SecureRandom.hex
-    user = FactoryGirl.create(:user, reset_password_token: token)
-    get user_reset_path(user, reset_password_token: token)
-    expect(response.status).to eq 200
-  end
-
   it 'allows reset' do
     token = SecureRandom.hex
     user = FactoryGirl.create(:user, reset_password_token: token)
     post user_reset_path(user, reset_password_token: token), users: {password: "junk", password_confirmation: "junk"}
-    expect(response.status).to eq 200
+    expect(response.status).to eq 204
     user.reload
     expect(user.valid_password? "junk").to be true
   end
