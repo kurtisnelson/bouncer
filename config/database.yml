@@ -8,6 +8,15 @@ development:
 test:
   <<: *default
   database: bouncer-test
+
+docker:
+  <<: *default
+  database: bouncer
+  pool: 5
+  username: postgres
+  password:
+  host: db
+
 production:
   <<: *default
   database: bouncer

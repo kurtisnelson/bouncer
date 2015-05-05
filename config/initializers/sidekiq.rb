@@ -1,6 +1,6 @@
 require 'sidekiq'
 
-unless ENV['REDIS_URL']
+if ENV['RACK_ENV'] == "docker"
   redis_domain = ENV['REDIS_1_PORT_6379_TCP_ADDR']
   redis_port   = ENV['REDIS_1_PORT_6379_TCP_PORT']
   ENV['REDIS_URL'] ="redis://#{redis_domain}:#{redis_port}"

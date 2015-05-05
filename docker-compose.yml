@@ -13,7 +13,7 @@ worker:
   command: bundle exec sidekiq
   env_file: .env
   environment:
-    - RACK_ENV=production
+    - RACK_ENV=docker
   links:
     - db
     - redis
@@ -26,7 +26,7 @@ web:
   env_file: .env
   environment:
     - PORT=80
-    - RACK_ENV=production
+    - RACK_ENV=docker
   ports:
     - "5000:80"
   links:
