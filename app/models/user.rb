@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
     :rememberable, :trackable,
     :omniauthable, omniauth_providers: [:facebook]
+  validates :phone, numericality: { only_integer: true, allow_blank: true }
   validates_uniqueness_of :phone, allow_blank: true
   validates_uniqueness_of :email, allow_blank: true
   validates_with EmailPhoneValidator
@@ -12,6 +13,11 @@ class User < ActiveRecord::Base
   def to_s
     return self.email if self.email
     self.phone
+  end
+
+  def phone= number
+     return super(number) unless number
+     write_attribute(:phone, number.delete("^0-9"))
   end
 
   # devise expects this
