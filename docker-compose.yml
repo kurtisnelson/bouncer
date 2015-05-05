@@ -12,9 +12,13 @@ worker:
   build: .
   command: bundle exec sidekiq
   env_file: .env
+  environment:
+    - RACK_ENV=production
   links:
     - db
     - redis
+  volumes:
+    - .:/app
 
 web:
   build: .
