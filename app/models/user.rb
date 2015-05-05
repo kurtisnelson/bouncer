@@ -95,7 +95,7 @@ class User < ActiveRecord::Base
 
   def get_facebook_picture
     return unless self.facebook_token
-    facebook = URI.parse('https://graph.facebook.com/me/picture?redirect=false&type=square&access_token=' + self.facebook_token)
+    facebook = URI.parse('https://graph.facebook.com/me/picture?redirect=false&width=100&height=100&access_token=' + self.facebook_token)
     response = Net::HTTP.get_response(facebook)
     if response.code == "200"
       user_data = JSON.parse(response.body)
@@ -109,7 +109,7 @@ class User < ActiveRecord::Base
     return unless self.image == nil
     email_address = self.email.downcase
     hash = Digest::MD5.hexdigest(email_address)
-    image_src = "https://secure.gravatar.com/avatar/#{hash}?d=mm&s=50"
+    image_src = "https://secure.gravatar.com/avatar/#{hash}?d=mm&s=100"
     self.image = image_src
     self.save
   end
